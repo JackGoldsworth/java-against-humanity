@@ -5,12 +5,14 @@ import cs319.cards.model.Party
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/parties")
 class PartyController {
 
-    @PostMapping
+    @PostMapping("/create")
     fun createParty(@RequestBody userName: String): ResponseEntity<String> {
         val party: Party? = PartyManager.getPartyByUsername(userName)
         return if(party == null) {
