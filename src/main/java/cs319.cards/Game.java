@@ -1,4 +1,6 @@
-package cs319.cards.model;
+package cs319.cards;
+
+import cs319.cards.model.Party;
 
 /**
  * Handles game state logic and rules
