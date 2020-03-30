@@ -1,13 +1,16 @@
 import React from 'react';
-import {ExampleComponent} from "./components/ExampleComponent";
+import {PlayerHand} from "./components/PlayerHand";
+import {BlackCard} from "./components/BlackCard";
 
 function App() {
     return (
         <div>
-            <ExampleComponent/>
+            <PlayerHand />
+            <BlackCard />
         </div>
     )
 }
+
 
 export default App;
 
