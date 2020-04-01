@@ -6,7 +6,9 @@ const Home = () => {
         <div>
             <NavBar/>
             <section className="hero is-fullheight is-mobile has-background-dark">
-                <p className="has-text-light">Hello, World</p>
+                <div className="container">
+                    <p>Hello, World</p>
+                </div>
             </section>
         </div>
     )
