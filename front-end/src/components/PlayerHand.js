@@ -1,18 +1,19 @@
 import React from 'react'
-import {WhiteCard} from "./WhiteCard";
-const axios = require('axios').default;
+import WhiteCard from "./WhiteCard";
 
-export class PlayerHand extends React.Component {
-
-
-    render() {
-        return (
-            <div className={PlayerHand}>
-                <WhiteCard />
-                <WhiteCard />
-                <WhiteCard />
-                <WhiteCard />
+const PlayerHand = () => {
+        return(
+            <div className={'wholeThing'}>
+                <div className={'playerHand'}>
+                <WhiteCard label = {'1'}/>
+                <WhiteCard label = {'2'}/>
+                <WhiteCard label = {'3'}/>
+                <WhiteCard label = {'4'}/>
+                <WhiteCard label = {'5'}/>
+                <WhiteCard label = {'6'}/>
+                <WhiteCard label = {'7'}/>
+                </div>
             </div>
-        )
-    }
+        );
 }
+export default PlayerHand;
