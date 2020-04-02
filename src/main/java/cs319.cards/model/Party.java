@@ -1,5 +1,7 @@
 package cs319.cards.model;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +9,11 @@ public class Party {
 
     private final String hostname;
     private final List<User> users = new ArrayList<>();
+    private final String id;
 
     public Party(String hostname) {
         this.hostname = hostname;
+        this.id = RandomStringUtils.randomAlphanumeric(6);
     }
 
     public void addUser(User user) {
@@ -22,7 +26,7 @@ public class Party {
 
     public void removeUserByName(String name) {
         users.forEach(user -> {
-            if(user.getUsername().equals(name)) {
+            if (user.getUsername().equals(name)) {
                 users.remove(user);
             }
         });
@@ -30,5 +34,9 @@ public class Party {
 
     public String getHostname() {
         return hostname;
+    }
+
+    public String getPartyId() {
+        return id;
     }
 }

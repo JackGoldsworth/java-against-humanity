@@ -12,4 +12,8 @@ public class PartyManager {
     public static Party getPartyByUsername(String userName) {
         return parties.stream().filter(party -> party.getHostname().equals(userName)).findFirst().orElseThrow();
     }
+
+    public static Party getPartyById(String id) {
+        return parties.stream().filter(party -> party.getPartyId().equals(id)).findFirst().orElseThrow();
+    }
 }

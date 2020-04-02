@@ -14,7 +14,7 @@ apply plugin: "com.moowork.node"
 
 group 'cs319.cards'
 version '0.1'
-ext.ktorversion = "1.3.0"
+
 mainClassName = 'cs319.cards.Application'
 
 repositories {
@@ -25,6 +25,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:2.2.4.RELEASE'
     implementation 'org.json:json:20180813'
     implementation 'org.apache.httpcomponents:httpclient:4.5.10'
+    implementation 'org.apache.commons:commons-lang3:3.10'
+
 }
 
 idea {
