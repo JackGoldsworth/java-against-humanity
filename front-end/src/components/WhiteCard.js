@@ -4,10 +4,7 @@ const WhiteCard = (props) =>
 {
     return(
         <div className={'whiteCard'}>
-      <input
-          type = "button"
-          value = {props.label}
-      />
+      <button className = "button is-rounded is-white has-background-white has-text-black"> {props.label} </button>
       </div>
     );
 }

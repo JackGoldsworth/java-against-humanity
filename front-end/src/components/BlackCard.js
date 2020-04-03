@@ -4,10 +4,9 @@ const BlackCard = (props) =>
 {
     return(
         <div className={'blackCard'}>
-            <input
-                type = "button"
-                value = {props.label}
-            />
+            <textarea className= "textarea has-background-black has-text-white" rows = "8" readOnly>
+                {props.label}
+            </textarea>
         </div>
     );
 }

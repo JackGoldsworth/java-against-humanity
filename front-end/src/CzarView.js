@@ -3,28 +3,86 @@ import PlayerHand from "./components/PlayerHand";
 import ScoreName from "./components/ScoreName";
 import BlackCard from "./components/BlackCard";
 import CzarChoices from "./components/CzarChoices";
+import WhiteCard from "./components/WhiteCard";
 
 
 class CzarView extends React.Component{
 
-    render()
-    {
+    render() {
         return (
-            <div className={'wholeCzarView'}>
+            <section className="hero is-fullheight is-mobile has-background-dark has-text-white">
+                <div class="level">
 
-                <div className={'players'}>
-                    <ScoreName label = {'Josh Edwards'} value = {0}/>
-                    <ScoreName label = {'Owen Snyder'} value = {0}/>
-                    <ScoreName label = {'Jack Goldsomething'} value = {-1}/>
-                    <ScoreName label = {'Will Hunt'} value = {0}/>
+                </div>
+                <div class="level">
+                    <div className="level-right">
+                        <button className="button "> Back</button>
+                    </div>
+                    <div className="level-item">
+                        <h1>Cards Against Humanity Clone</h1>
+                    </div>
+                    <div className="level-left">
+                        YOU ARE THE CZAR!
+                    </div>
                 </div>
 
-                <div className={'cards'}>
-                    <BlackCard label = {'Hillary Clinton is _____ when Bill gets home.'}/>
-                    <CzarChoices />
+                <div class="level">
+                    <div className="level-item">
+                        <ScoreName label={"Big Jed"} value={0}/>
+                    </div>
+
+                    <div className="level-item">
+                        <ScoreName label={"Owen Boi"} value={0}/>
+                    </div>
+
+                    <div className="level-item">
+                        <ScoreName label={"Jack Nerd"} value={0}/>
+                    </div>
+
+                    <div className="level-item">
+                        <ScoreName label={"Jeff Epstein"} value={0}/>
+                    </div>
                 </div>
 
-            </div>
+                <div className="level">
+                    <div className="level-item">
+                        <BlackCard label="BLACK CARD TO BE FILLED WITH SILLY PROMPT"/>
+                    </div>
+                </div>
+
+                <div class="level">
+                    Your cards:
+                    <div className="level-item">
+                        <WhiteCard label="WHITE CARD FROM ONE OF THE PLAYERS"/>
+                    </div>
+                    <div className="level-item">
+                        <WhiteCard label="WHITE CARD FROM ONE OF THE PLAYERS"/>
+                    </div>
+                    <div className="level-item">
+                        <WhiteCard label="WHITE CARD FROM ONE OF THE PLAYERS"/>
+                    </div>
+                    <div className="level-item">
+                        <WhiteCard label="WHITE CARD FROM ONE OF THE PLAYERS"/>
+                    </div>
+
+                </div>
+                <div className="level">
+                    <div className="level-item">
+                        <WhiteCard label="WHITE CARD FROM ONE OF THE PLAYERS"/>
+                    </div>
+                    <div className="level-item">
+                        <WhiteCard label="WHITE CARD FROM ONE OF THE PLAYERS"/>
+                    </div>
+                    <div className="level-item">
+                        <WhiteCard label="WHITE CARD FROM ONE OF THE PLAYERS"/>
+                    </div>
+                </div>
+
+                <div className="level">
+
+                </div>
+
+            </section>
         );
     }
 }
