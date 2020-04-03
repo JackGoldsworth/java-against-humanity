@@ -1,16 +1,102 @@
 package cs319.cards;
 
+import cs319.cards.model.Card;
+import cs319.cards.model.Deck;
 import cs319.cards.model.Party;
+import cs319.cards.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Handles game state logic and rules
  */
 public class Game {
 
-    protected Party party;
+    private Party party;
 
-    public Game(Party p) { //should also require a parameter for the deck, either a separate class or a list of cards
-        party = p;         //depending on implementation, as well as any custom rules(conditions for game end, etc.
+    private Deck deck;
+
+    private Deck blackDeck;
+
+    private Card blackCard;
+
+    private User czar;
+
+    private List<Card> czarSubmissions;
+
+    private Deck waste;
+
+    public Game(Party p, Deck blackDeck, Deck whiteDeck) {
+        party = p;
+        deck = whiteDeck;
+        this.blackDeck = blackDeck;
+        czar = p.getUserByIndex(0); //temp
+        czarSubmissions = new ArrayList<Card>();
+        waste = new Deck();
     }
+
+    //Getters
+    public User getCzar() { return czar; }
+
+    public String getCzarName() { return czar.getUsername(); }
+
+    public List<Card> getCzarChoices() { return czarSubmissions; }
+
+    public Party getParty() { return party; }
+
+    public Card getBlackCard() { return blackCard; }
+
+    //Game Actions
+    /**
+     * Gives each player 10 cards and does other necessary things for the start of the game
+     * Must be called once before any other game actions
+     */
+    public void startGame() {
+        deck.shuffle();
+        blackDeck.shuffle();
+
+        for (int i = 0; i < party.getPartySize(); i++) {
+            for (int j = 0; j < 10; j++) {
+                party.getUserByIndex(i).addCard(deck.draw());
+            }
+        }
+
+        blackCard = blackDeck.draw();
+    }
+
+    /**
+     * Plays a card for the czar to consider (single blank)
+     * @param c Card to play
+     */
+    public void playCardSingle(Card c, User u) {
+        czarSubmissions.add(c);
+        u.removeCards(c);
+    }
+
+    /**
+     * Method used by the czar to select their favorite card played (on a single blank black card)
+     * @param c The czar's favorite card played
+     */
+    public void czarSelectSingle(Card c) {
+        c.getHolder().addPoint(); //gives the winning card's holder a point
+
+        for (int i = 0; i < czarSubmissions.size(); i++) { //sends all played cards to the waste pile
+            czarSubmissions.get(i).removeHolder();
+            waste.addCard(czarSubmissions.get(i));
+        }
+
+        czarSubmissions = new ArrayList<Card>(); //resets czar choices
+
+        for (int i = 0; i < party.getPartySize(); i++) { //draws each player back up to 10 cards
+            if (party.getUserByIndex(i).getCurrentCards().size() < 10) {
+                party.getUserByIndex(i).addCard(deck.draw());
+            }
+        }
+
+        //todo: pick next czar, black card
+    }
+    
+
 
 }

@@ -39,4 +39,26 @@ public class Party {
     public String getPartyId() {
         return id;
     }
+
+    public User getUserByName(String name) {
+        for(int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUsername().equals(name)) {
+                return users.get(i);
+            }
+        }
+        return null;
+    }
+
+    public User getUserByIndex(int index) { return users.get(index); }
+
+    public int getIndexByUsername(String name) {
+        for(int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUsername().equals(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getPartySize() { return users.size(); }
 }
