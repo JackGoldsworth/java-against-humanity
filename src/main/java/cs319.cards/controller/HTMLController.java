@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HTMLController {
 
-    @RequestMapping(value = {"/", "/about"})
+    @RequestMapping(value = {"/", "/about", "/hostview"})
     public String index() {
         return "index.html";
     }
