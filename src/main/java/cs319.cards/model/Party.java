@@ -52,7 +52,7 @@ public class Party {
     public User getUserByIndex(int index) { return users.get(index); }
 
     public int getIndexByUsername(String name) {
-        for(int i = 0; i < users.size(); i++) {
+        for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getUsername().equals(name)) {
                 return i;
             }
@@ -60,5 +60,11 @@ public class Party {
         return -1;
     }
 
-    public int getPartySize() { return users.size(); }
+    public int getPartySize() {
+        return users.size();
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
 }
