@@ -14,26 +14,24 @@ import java.util.List;
 public class Game {
 
     private Party party;
-
     private Deck deck;
-
     private Deck blackDeck;
-
-    private Card blackCard;
-
+    private Card curBlackCard;
     private User czar;
-
     private List<Card> czarSubmissions;
-
     private Deck waste;
+    private Deck blackWaste;
+    private int scoreToWin;
 
-    public Game(Party p, Deck blackDeck, Deck whiteDeck) {
+    public Game(Party p, Deck blackDeck, Deck whiteDeck, int scoreToWin) {
         party = p;
         deck = whiteDeck;
         this.blackDeck = blackDeck;
+        this.scoreToWin = scoreToWin;
         czar = p.getUserByIndex(0); //temp
         czarSubmissions = new ArrayList<Card>();
         waste = new Deck();
+        blackWaste = new Deck();
     }
 
     //Getters
@@ -45,7 +43,7 @@ public class Game {
 
     public Party getParty() { return party; }
 
-    public Card getBlackCard() { return blackCard; }
+    public Card getBlackCard() { return curBlackCard; }
 
     //Game Actions
     /**
@@ -62,7 +60,7 @@ public class Game {
             }
         }
 
-        blackCard = blackDeck.draw();
+        curBlackCard = blackDeck.draw();
     }
 
     /**
@@ -97,9 +95,31 @@ public class Game {
             }
         }
 
-        //todo: pick next czar, black card
+        blackWaste.addCard(curBlackCard);
+        curBlackCard = blackDeck.draw();
+
+        shiftCzar();
     }
-    
 
+    /**
+     * Checks if any player has won
+     * @return Winning User, or null if no winner found
+     */
+    public User checkForWinner() {
+        for (int i = 0; i < party.getPartySize(); i++) {
+            if (party.getUserByIndex(i).getPoints() >= scoreToWin) {
+                return party.getUserByIndex(i);
+            }
+        }
+        return null;
+    }
+    //assumes party is ordered in turn order, subject to change
+    public void shiftCzar() {
+        if (party.getUsers().indexOf(czar) >= (party.getPartySize() - 1)) {
+            czar = party.getUsers().get(0);
+        } else {
+            czar = party.getUsers().get(party.getUsers().indexOf(czar) + 1);
+        }
 
+    }
 }

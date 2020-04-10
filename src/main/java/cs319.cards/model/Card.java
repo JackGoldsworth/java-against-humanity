@@ -23,6 +23,8 @@ public class Card {
         return cardMessage;
     }
 
+    public short getBlanks() { return blanks; } //if 0 blanks = white card
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -38,13 +38,4 @@ public class Deck {
         deck.push(c);
         size++;
     }
-
-    /**
-     * Same thing but with strings, initializes card ID automatically
-     * @param s String to be converted into a card
-     */
-    public void addCard(String s) {
-       // deck.push(new Card((short)size, s));
-        size++;
-    }
 }
