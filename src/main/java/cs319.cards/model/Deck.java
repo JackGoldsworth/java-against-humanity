@@ -44,7 +44,7 @@ public class Deck {
      * @param s String to be converted into a card
      */
     public void addCard(String s) {
-        deck.push(new Card((short)size, s));
+       // deck.push(new Card((short)size, s));
         size++;
     }
 }

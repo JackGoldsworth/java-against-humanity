@@ -6,7 +6,7 @@ import java.util.List;
 public class User {
 
     private final String username;
-    private final List<Card> currentCards = new ArrayList<>();
+    private final List<Short> currentCards = new ArrayList<>();
     private int points;
 
     public User(String username) {
@@ -15,16 +15,22 @@ public class User {
     }
 
     public void addCard(Card card) {
-        card.setHolder(this);
-        currentCards.add(card);
+        currentCards.add(card.getCardId());
     }
 
     public void removeCards(Card card) {
-        card.removeHolder();
-        currentCards.remove(card);
+        currentCards.remove(card.getCardId());
     }
 
-    public List<Card> getCurrentCards() {
+    public void addCard(short cardId) {
+        currentCards.add(cardId);
+    }
+
+    public void removeCards(short cardId) {
+        currentCards.remove(cardId);
+    }
+
+    public List<Short> getCurrentCards() {
         return currentCards;
     }
 
@@ -37,4 +43,12 @@ public class User {
     public void addPoint() { points++; }
 
     public void resetPoints() { points = 0; }
+
+    public boolean hasCard(Card card) {
+        return currentCards.contains(card.getCardId());
+    }
+
+    public boolean hasCard(short cardId) {
+        return currentCards.contains(cardId);
+    }
 }

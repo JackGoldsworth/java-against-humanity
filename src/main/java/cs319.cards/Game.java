@@ -79,10 +79,13 @@ public class Game {
      * @param c The czar's favorite card played
      */
     public void czarSelectSingle(Card c) {
-        c.getHolder().addPoint(); //gives the winning card's holder a point
+        // add a point to the user that has this card.
+        party.getUsers().stream().filter(user -> user.hasCard(c)).findFirst().ifPresent(User::addPoint);
 
         for (int i = 0; i < czarSubmissions.size(); i++) { //sends all played cards to the waste pile
-            czarSubmissions.get(i).removeHolder();
+            Card card = czarSubmissions.get(i);
+            // Removes the card from the user that has this card.
+            party.getUsers().stream().filter(user -> user.hasCard(card)).findFirst().ifPresent(user -> user.removeCards(card));
             waste.addCard(czarSubmissions.get(i));
         }
 

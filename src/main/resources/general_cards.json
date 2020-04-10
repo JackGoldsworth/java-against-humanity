@@ -1,0 +1,9 @@
+{
+  "cards": [
+    {
+      "cardId": 0,
+      "cardMessage": "Something _________",
+      "blanks": 1
+    }
+  ]
+}

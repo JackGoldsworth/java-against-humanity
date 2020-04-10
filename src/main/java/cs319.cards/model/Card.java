@@ -1,17 +1,18 @@
 package cs319.cards.model;
 
+import java.util.List;
+import java.util.Objects;
+
 public class Card {
 
     private final short cardId;
     private final String cardMessage;
-    private boolean held;
-    private User holder;
+    private final short blanks;
 
-    public Card(short cardId, String cardMessage) {
+    public Card(short cardId, String cardMessage, short blanks) {
         this.cardId = cardId;
         this.cardMessage = cardMessage;
-        held = false;
-        holder = null;
+        this.blanks = blanks;
     }
 
     public short getCardId() {
@@ -22,11 +23,18 @@ public class Card {
         return cardMessage;
     }
 
-    public boolean isHeld() { return held; }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return cardId == card.cardId &&
+                blanks == card.blanks &&
+                Objects.equals(cardMessage, card.cardMessage);
+    }
 
-    public User getHolder() { return holder; }
-
-    public void setHolder(User u) { holder = u; held = true; }
-
-    public void removeHolder() { holder = null; held = false; }
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardId, cardMessage, blanks);
+    }
 }
