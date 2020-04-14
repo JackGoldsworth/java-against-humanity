@@ -67,4 +67,8 @@ public class Party {
     public List<User> getUsers() {
         return users;
     }
+
+    public boolean containsUser(String username) {
+        return users.stream().anyMatch(user -> user.getUsername().equals(username));
+    }
 }
