@@ -2,11 +2,11 @@ package cs319.cards.model;
 
 import java.util.List;
 
-public class CardManager {
+public class CardDeck {
 
     private final List<Card> cards;
 
-    public CardManager(List<Card> cards) {
+    public CardDeck(List<Card> cards) {
         this.cards = cards;
     }
 

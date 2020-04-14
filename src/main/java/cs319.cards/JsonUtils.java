@@ -2,7 +2,7 @@ package cs319.cards;
 
 import com.google.gson.Gson;
 import cs319.cards.model.Card;
-import cs319.cards.model.CardManager;
+import cs319.cards.model.CardDeck;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -33,7 +33,7 @@ public class JsonUtils {
         if(file != null) {
             try {
                 Reader reader = Files.newBufferedReader(Paths.get(file.toURI()));
-                List<Card> cards = gson.fromJson(reader, CardManager.class).getCards();
+                List<Card> cards = gson.fromJson(reader, CardDeck.class).getCards();
                 cards.forEach(card -> System.out.println(card.getCardMessage()));
                 return cards;
             } catch (IOException | URISyntaxException e) {
