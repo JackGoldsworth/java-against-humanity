@@ -2,6 +2,7 @@ import React from 'react';
 import ScoreName from "./components/ScoreName";
 import BlackCard from "./components/BlackCard";
 import WhiteCard from "./components/WhiteCard";
+import {getUsername} from "./AppUtils";
 
 const axios = require('axios').default;
 
@@ -71,23 +72,19 @@ export default class SelectCard extends React.Component {
     }
 
     getUserCards() {
-        let value = "; " + document.cookie;
-        let parts = value.split("; username=");
-        if (parts.length === 2) {
-            let username = parts.pop().split(";").shift().toString();
-            if (username) {
-                axios.post("http://localhost:8080/cards/get",
-                    username.toString(),
-                    {headers: {"Content-Type": "text/plain"}}
-                ).then((response) => {
-                    console.log(response.data)
-                    if (response.status === 200) {
-                        console.log("Successfully retrieved cards")
-                        this.setState({data: response.data});
-                        this.forceUpdate()
-                    }
-                });
-            }
+        let username = getUsername()
+        if (username) {
+            axios.post("http://localhost:8080/cards/get",
+                username.toString(),
+                {headers: {"Content-Type": "text/plain"}}
+            ).then((response) => {
+                console.log(response.data)
+                if (response.status === 200) {
+                    console.log("Successfully retrieved cards")
+                    this.setState({data: response.data});
+                    this.forceUpdate()
+                }
+            });
         } else {
             console.log("Username didn't exist.")
         }

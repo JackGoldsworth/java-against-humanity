@@ -1,7 +1,6 @@
 import React from 'react';
 import {NavBar} from "./Navbar";
-
-const axios = require('axios').default;
+import {getPartyId} from "../AppUtils";
 
 export class HostView extends React.Component {
 
@@ -68,11 +67,5 @@ export class HostView extends React.Component {
  * Renders the join code on the host view page.
  */
 const addJoinCode = () => {
-    // https://stackoverflow.com/questions/10730362/get-cookie-by-name
-    // This exists to get the proper cookie from the cookie set.
-    let value = "; " + document.cookie;
-    let parts = value.split("; joinCode=");
-    if (parts.length === 2) {
-        document.getElementById("joinCode").innerText = "Join Code: " + parts.pop().split(";").shift();
-    }
+    document.getElementById("joinCode").innerText = "Join Code: " + getPartyId();
 }
