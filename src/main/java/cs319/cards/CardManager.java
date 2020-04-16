@@ -4,6 +4,7 @@ import cs319.cards.model.AnswerCard;
 import cs319.cards.model.QuestionCard;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 /**
@@ -64,5 +65,37 @@ public class CardManager {
      */
     public static List<AnswerCard> convertIdToAnswerCards(List<Short> cardIds) {
         return cardIds.stream().map(CardManager::getAnswerCardById).collect(Collectors.toList());
+    }
+
+    /**
+     * Chooses a card at random based on what cards the player
+     * has and what card packs are allowed on the server.
+     *
+     * @param playersCurrentCards current cards of players.
+     * @param cardPacks           card packs allowed.
+     * @return an answer card.
+     */
+    public static short getAnswerCardAtRandom(List<Short> playersCurrentCards, List<Integer> cardPacks) {
+        List<Short> answers = ANSWER_CARDS.stream()
+                .filter(card -> !playersCurrentCards.contains(card.getCardId()) && cardPacks.contains(card.getCardPack()))
+                .map(AnswerCard::getCardId)
+                .collect(Collectors.toList());
+        return answers.get(ThreadLocalRandom.current().nextInt(answers.size()));
+    }
+
+    /**
+     * Chooses a card at random based on what cards have
+     * been used and what card packs are allowed.
+     *
+     * @param cardsAlreadyUsed question cards already used.
+     * @param cardPacks        card packs allowed.
+     * @return a question card.
+     */
+    public static short getQuestionCardAtRandom(List<Short> cardsAlreadyUsed, List<Integer> cardPacks) {
+        List<Short> answers = QUESTION_CARDS.stream()
+                .filter(card -> !cardsAlreadyUsed.contains(card.getCardId()) && cardPacks.contains(card.getCardPack()))
+                .map(QuestionCard::getCardId)
+                .collect(Collectors.toList());
+        return answers.get(ThreadLocalRandom.current().nextInt(answers.size()));
     }
 }

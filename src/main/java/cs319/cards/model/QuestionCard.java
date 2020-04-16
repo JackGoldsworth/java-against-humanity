@@ -8,11 +8,13 @@ public class QuestionCard implements Card {
     private final short cardId;
     private final String cardMessage;
     private final short blanks;
+    private final int cardPack;
 
-    public QuestionCard(short cardId, String cardMessage, short blanks) {
+    public QuestionCard(short cardId, String cardMessage, short blanks, int cardPack) {
         this.cardId = cardId;
         this.cardMessage = cardMessage;
         this.blanks = blanks;
+        this.cardPack = cardPack;
     }
 
     public short getCardId() {
@@ -23,7 +25,13 @@ public class QuestionCard implements Card {
         return cardMessage;
     }
 
-    public short getBlanks() { return blanks; } //if 0 blanks = white card
+    public short getBlanks() {
+        return blanks;
+    }
+
+    public int getCardPack() {
+        return cardPack;
+    }
 
     @Override
     public boolean equals(Object o) {

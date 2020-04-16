@@ -2,11 +2,13 @@
   "cards": [
     {
       "cardId": 0,
-      "cardMessage": "You're mom."
+      "cardMessage": "You're mom.",
+      "cardPack": 0
     },
     {
       "cardId": 1,
-      "cardMessage": "Thing."
+      "cardMessage": "Thing.",
+      "cardPack": 0
     }
   ]
 }
