@@ -12,14 +12,16 @@ public class User {
     public User(String username) {
         this.username = username;
         points = 0;
+        addCard((short) 0);
+        addCard((short) 1);
     }
 
-    public void addCard(QuestionCard questionCard) {
-        currentCards.add(questionCard.getCardId());
+    public void addCard(AnswerCard answerCard) {
+        currentCards.add(answerCard.getCardId());
     }
 
-    public void removeCards(QuestionCard questionCard) {
-        currentCards.remove(questionCard.getCardId());
+    public void removeCards(AnswerCard answerCard) {
+        currentCards.remove(answerCard.getCardId());
     }
 
     public void addCard(short cardId) {
@@ -50,8 +52,8 @@ public class User {
         points = 0;
     }
 
-    public boolean hasCard(QuestionCard questionCard) {
-        return currentCards.contains(questionCard.getCardId());
+    public boolean hasCard(AnswerCard answerCard) {
+        return currentCards.contains(answerCard.getCardId());
     }
 
     public boolean hasCard(short cardId) {

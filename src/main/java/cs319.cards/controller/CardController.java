@@ -5,6 +5,7 @@ import cs319.cards.PartyManager;
 import cs319.cards.model.AnswerCard;
 import cs319.cards.model.Party;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequestMapping("/cards")
 public class CardController {
 
+    @PostMapping("/get")
     public ResponseEntity<List<AnswerCard>> getPlayersCard(@RequestBody String username) {
         Optional<Party> party = PartyManager.getPartyByUsername(username);
         if (party.isPresent()) {
@@ -26,6 +28,7 @@ public class CardController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/remove")
     public ResponseEntity<Boolean> removeCardFromPlayer(@RequestBody short cardId, @RequestBody String username) {
         Optional<Party> party = PartyManager.getPartyByUsername(username);
         if (party.isPresent()) {

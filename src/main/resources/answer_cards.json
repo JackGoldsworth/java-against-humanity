@@ -3,6 +3,10 @@
     {
       "cardId": 0,
       "cardMessage": "You're mom."
+    },
+    {
+      "cardId": 1,
+      "cardMessage": "Thing."
     }
   ]
 }

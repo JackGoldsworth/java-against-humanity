@@ -4,20 +4,20 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Deck {
+public class Deck<T extends Card> {
 
-    private LinkedList<QuestionCard> deck;
+    private LinkedList<T> deck;
 
     private int size;
 
     private boolean isBlack; //temp
 
     public Deck() {
-        deck = new LinkedList<QuestionCard>();
+        deck = new LinkedList<T>();
         size = 0;
     }
 
-    public Deck(List<QuestionCard> l) {
+    public Deck(List<T> l) {
         size = l.size();
         for (int i = 0; i < l.size(); i++) {
             deck.push(l.get(i));
@@ -26,10 +26,11 @@ public class Deck {
 
     public int getSize() { return size; }
 
-    public QuestionCard draw() {
+    public T draw() {
         size--;
         return deck.pop();
     }
+
 
     public void shuffle() { Collections.shuffle(deck); }
 
@@ -38,7 +39,7 @@ public class Deck {
      *
      * @param c Card to be added
      */
-    public void addCard(QuestionCard c) {
+    public void addCard(T c) {
         deck.push(c);
         size++;
     }

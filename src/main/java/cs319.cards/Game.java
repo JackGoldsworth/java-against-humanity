@@ -1,9 +1,6 @@
 package cs319.cards;
 
-import cs319.cards.model.Deck;
-import cs319.cards.model.Party;
-import cs319.cards.model.QuestionCard;
-import cs319.cards.model.User;
+import cs319.cards.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,22 +11,22 @@ import java.util.List;
 public class Game {
 
     private Party party;
-    private Deck deck;
-    private Deck blackDeck;
+    private Deck<AnswerCard> deck;
+    private Deck<QuestionCard> blackDeck;
     private QuestionCard curBlackQuestionCard;
     private User czar;
-    private List<QuestionCard> czarSubmissions;
-    private Deck waste;
-    private Deck blackWaste;
+    private List<AnswerCard> czarSubmissions;
+    private Deck<AnswerCard> waste;
+    private Deck<QuestionCard> blackWaste;
     private int scoreToWin;
 
-    public Game(Party p, Deck blackDeck, Deck whiteDeck, int scoreToWin) {
+    public Game(Party p, Deck<QuestionCard> blackDeck, Deck<AnswerCard> whiteDeck, int scoreToWin) {
         party = p;
         deck = whiteDeck;
         this.blackDeck = blackDeck;
         this.scoreToWin = scoreToWin;
         czar = p.getUserByIndex(0); //temp
-        czarSubmissions = new ArrayList<QuestionCard>();
+        czarSubmissions = new ArrayList<AnswerCard>();
         waste = new Deck();
         blackWaste = new Deck();
     }
@@ -39,7 +36,7 @@ public class Game {
 
     public String getCzarName() { return czar.getUsername(); }
 
-    public List<QuestionCard> getCzarChoices() {
+    public List<AnswerCard> getCzarChoices() {
         return czarSubmissions;
     }
 
@@ -72,7 +69,7 @@ public class Game {
      *
      * @param c Card to play
      */
-    public void playCardSingle(QuestionCard c, User u) {
+    public void playCardSingle(AnswerCard c, User u) {
         czarSubmissions.add(c);
         u.removeCards(c);
     }
@@ -82,18 +79,18 @@ public class Game {
      *
      * @param c The czar's favorite card played
      */
-    public void czarSelectSingle(QuestionCard c) {
+    public void czarSelectSingle(AnswerCard c) {
         // add a point to the user that has this card.
         party.getUsers().stream().filter(user -> user.hasCard(c)).findFirst().ifPresent(User::addPoint);
 
         for (int i = 0; i < czarSubmissions.size(); i++) { //sends all played cards to the waste pile
-            QuestionCard questionCard = czarSubmissions.get(i);
+            AnswerCard answerCard = czarSubmissions.get(i);
             // Removes the card from the user that has this card.
-            party.getUsers().stream().filter(user -> user.hasCard(questionCard)).findFirst().ifPresent(user -> user.removeCards(questionCard));
+            party.getUsers().stream().filter(user -> user.hasCard(answerCard)).findFirst().ifPresent(user -> user.removeCards(answerCard));
             waste.addCard(czarSubmissions.get(i));
         }
 
-        czarSubmissions = new ArrayList<QuestionCard>(); //resets czar choices
+        czarSubmissions = new ArrayList<AnswerCard>(); //resets czar choices
 
         for (int i = 0; i < party.getPartySize(); i++) { //draws each player back up to 10 cards
             if (party.getUserByIndex(i).getCurrentCards().size() < 10) {

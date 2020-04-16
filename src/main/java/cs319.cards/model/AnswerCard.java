@@ -3,7 +3,7 @@ package cs319.cards.model;
 import java.util.List;
 import java.util.Objects;
 
-public class AnswerCard {
+public class AnswerCard implements Card {
 
     private final short cardId;
     private final String cardMessage;
