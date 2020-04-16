@@ -1,8 +1,6 @@
 import React from 'react'
 import {NavBar} from "../Navbar";
 
-const axios = require('axios').default;
-
 const Home = () => {
     return (
         <div>
@@ -13,7 +11,7 @@ const Home = () => {
                     <input id="username" className="input" type="text" style={{marginTop: 5 + 'vh', width: 23 + '%'}}
                            placeholder="Username"/>
                     <div className="buttons is-centered are-medium" style={{marginTop: 6 + 'vh'}}>
-                        <button className="button is-success" onClick={createParty}>Create Game</button>
+                        <button className="button is-success" onClick={setUsername}>Create Game</button>
                         <button className="button is-info" onClick={joinPartyMenu}>Join Game</button>
                     </div>
                 </div>
@@ -37,24 +35,16 @@ const joinPartyMenu = () => {
 }
 
 /**
- * This creates a party and then sends
- * you to the party setup page.
+ * This sets your username as a cookie.
  */
-const createParty = () => {
+const setUsername = () => {
     let username = document.getElementById("username").value;
     console.log(username.toString())
     if (username.toString()) {
-        axios.post("http://localhost:8080/parties/create",
-            username.toString(),
-            {headers: {"Content-Type": "text/plain"}}
-        ).then((response) => {
-            if (response.status === 200) {
-                document.cookie = "username=" + username.toString();
-                document.cookie = "joinCode=" + response.data;
-                window.location = "/hostview"
-                console.log(response.data)
-            }
-        });
+        document.cookie = "username=" + username.toString();
+        window.location = "/hostview"
+    } else {
+        console.log("Please enter a username!")
     }
 }
 

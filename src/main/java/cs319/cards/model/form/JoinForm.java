@@ -1,4 +1,4 @@
-package cs319.cards.model;
+package cs319.cards.model.form;
 
 public class JoinForm {
 

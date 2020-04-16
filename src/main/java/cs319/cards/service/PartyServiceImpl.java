@@ -1,21 +1,22 @@
 package cs319.cards.service;
 
 import cs319.cards.PartyManager;
-import cs319.cards.model.JoinForm;
 import cs319.cards.model.Party;
 import cs319.cards.model.User;
+import cs319.cards.model.form.JoinForm;
 import javafx.util.Pair;
 
+import java.util.List;
 import java.util.Optional;
 
 public class PartyServiceImpl implements PartyService {
 
     @Override
-    public Pair<Party, Boolean> createParty(String userName) {
-        Optional<Party> optionalParty = PartyManager.getPartyByUsername(userName);
+    public Pair<Party, Boolean> createParty(String username, List<Integer> cardPacks, int maxPlayers, int scoreToWin) {
+        Optional<Party> optionalParty = PartyManager.getPartyByUsername(username);
         if (!optionalParty.isPresent()) {
-            Party party = new Party(userName);
-            party.addUser(new User(userName));
+            Party party = new Party(username, cardPacks, maxPlayers, scoreToWin);
+            party.addUser(new User(username));
             PartyManager.parties.add(party);
             return new Pair<>(party, true);
         }

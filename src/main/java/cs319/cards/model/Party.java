@@ -10,10 +10,16 @@ public class Party {
     private final String hostname;
     private final List<User> users = new ArrayList<>();
     private final String id;
+    private final List<Integer> cardPacks;
+    private final int maxPlayers;
+    private final int scoreToWin;
 
-    public Party(String hostname) {
+    public Party(String hostname, List<Integer> cardPacks, int maxPlayers, int scoreToWin) {
         this.hostname = hostname;
+        this.cardPacks = cardPacks;
         this.id = RandomStringUtils.randomAlphanumeric(6);
+        this.maxPlayers = maxPlayers;
+        this.scoreToWin = scoreToWin;
     }
 
     public void addUser(User user) {
@@ -70,5 +76,13 @@ public class Party {
 
     public boolean containsUser(String username) {
         return users.stream().anyMatch(user -> user.getUsername().equals(username));
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public int getScoreToWin() {
+        return scoreToWin;
     }
 }

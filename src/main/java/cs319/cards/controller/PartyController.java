@@ -1,7 +1,8 @@
 package cs319.cards.controller;
 
-import cs319.cards.model.JoinForm;
 import cs319.cards.model.Party;
+import cs319.cards.model.form.JoinForm;
+import cs319.cards.model.form.PartyForm;
 import cs319.cards.service.PartyServiceImpl;
 import javafx.util.Pair;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class PartyController {
     private final PartyServiceImpl partyService = new PartyServiceImpl();
 
     @PostMapping("/create")
-    public ResponseEntity<String> createParty(@RequestBody String userName) {
-        Pair<Party, Boolean> result = partyService.createParty(userName);
-        return result.getValue() ? ResponseEntity.ok(result.getKey().getPartyId()) : ResponseEntity.badRequest().body("Party already exists under $userName");
+    public ResponseEntity<String> createParty(@RequestBody PartyForm form) {
+        Pair<Party, Boolean> result = partyService.createParty(form.getUsername(), form.getCardPacks(), form.getMaxPlayers(), form.getScoreToWin());
+        return result.getValue() ? ResponseEntity.ok(result.getKey().getPartyId()) : ResponseEntity.badRequest().body("Party already exists under " + form.getUsername());
     }
 
     @PostMapping("/join")
