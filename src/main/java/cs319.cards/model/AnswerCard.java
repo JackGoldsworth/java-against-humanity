@@ -3,16 +3,14 @@ package cs319.cards.model;
 import java.util.List;
 import java.util.Objects;
 
-public class Card {
+public class AnswerCard {
 
     private final short cardId;
     private final String cardMessage;
-    private final short blanks;
 
-    public Card(short cardId, String cardMessage, short blanks) {
+    public AnswerCard(short cardId, String cardMessage) {
         this.cardId = cardId;
         this.cardMessage = cardMessage;
-        this.blanks = blanks;
     }
 
     public short getCardId() {
@@ -23,20 +21,30 @@ public class Card {
         return cardMessage;
     }
 
-    public short getBlanks() { return blanks; } //if 0 blanks = white card
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return cardId == card.cardId &&
-                blanks == card.blanks &&
-                Objects.equals(cardMessage, card.cardMessage);
+        AnswerCard answerCard = (AnswerCard) o;
+        return cardId == answerCard.cardId && Objects.equals(cardMessage, answerCard.cardMessage);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardId, cardMessage, blanks);
+        return Objects.hash(cardId, cardMessage);
     }
+
+    public class AnswerDeck {
+
+        private final List<AnswerCard> cards;
+
+        public AnswerDeck(List<AnswerCard> cards) {
+            this.cards = cards;
+        }
+
+        public List<AnswerCard> getAnswerCards() {
+            return cards;
+        }
+    }
+
 }

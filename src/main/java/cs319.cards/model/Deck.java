@@ -6,18 +6,18 @@ import java.util.List;
 
 public class Deck {
 
-    private LinkedList<Card> deck;
+    private LinkedList<QuestionCard> deck;
 
     private int size;
 
     private boolean isBlack; //temp
 
     public Deck() {
-        deck = new LinkedList<Card>();
+        deck = new LinkedList<QuestionCard>();
         size = 0;
     }
 
-    public Deck(List<Card> l) {
+    public Deck(List<QuestionCard> l) {
         size = l.size();
         for (int i = 0; i < l.size(); i++) {
             deck.push(l.get(i));
@@ -26,15 +26,19 @@ public class Deck {
 
     public int getSize() { return size; }
 
-    public Card draw() { size--; return deck.pop(); }
+    public QuestionCard draw() {
+        size--;
+        return deck.pop();
+    }
 
     public void shuffle() { Collections.shuffle(deck); }
 
     /**
      * Adds a NEW card to the deck, not returning an old one
+     *
      * @param c Card to be added
      */
-    public void addCard(Card c) {
+    public void addCard(QuestionCard c) {
         deck.push(c);
         size++;
     }

@@ -14,12 +14,12 @@ public class User {
         points = 0;
     }
 
-    public void addCard(Card card) {
-        currentCards.add(card.getCardId());
+    public void addCard(QuestionCard questionCard) {
+        currentCards.add(questionCard.getCardId());
     }
 
-    public void removeCards(Card card) {
-        currentCards.remove(card.getCardId());
+    public void removeCards(QuestionCard questionCard) {
+        currentCards.remove(questionCard.getCardId());
     }
 
     public void addCard(short cardId) {
@@ -38,14 +38,20 @@ public class User {
         return username;
     }
 
-    public int getPoints() { return points; }
+    public int getPoints() {
+        return points;
+    }
 
-    public void addPoint() { points++; }
+    public void addPoint() {
+        points++;
+    }
 
-    public void resetPoints() { points = 0; }
+    public void resetPoints() {
+        points = 0;
+    }
 
-    public boolean hasCard(Card card) {
-        return currentCards.contains(card.getCardId());
+    public boolean hasCard(QuestionCard questionCard) {
+        return currentCards.contains(questionCard.getCardId());
     }
 
     public boolean hasCard(short cardId) {

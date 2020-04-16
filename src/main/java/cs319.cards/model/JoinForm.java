@@ -2,8 +2,8 @@ package cs319.cards.model;
 
 public class JoinForm {
 
-    private String username;
-    private String id;
+    private final String username;
+    private final String id;
 
     public JoinForm(String username, String id) {
         this.id = id;

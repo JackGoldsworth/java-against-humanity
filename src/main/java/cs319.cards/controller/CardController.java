@@ -2,7 +2,7 @@ package cs319.cards.controller;
 
 import cs319.cards.CardManager;
 import cs319.cards.PartyManager;
-import cs319.cards.model.Card;
+import cs319.cards.model.AnswerCard;
 import cs319.cards.model.Party;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,12 +16,12 @@ import java.util.Optional;
 @RequestMapping("/cards")
 public class CardController {
 
-    public ResponseEntity<List<Card>> getPlayersCard(@RequestBody String username) {
+    public ResponseEntity<List<AnswerCard>> getPlayersCard(@RequestBody String username) {
         Optional<Party> party = PartyManager.getPartyByUsername(username);
         if (party.isPresent()) {
             Party playerParty = party.get();
-            List<Card> cards = CardManager.convertIdToCards(playerParty.getUserByName(username).getCurrentCards());
-            return ResponseEntity.ok(cards);
+            List<AnswerCard> answerCards = CardManager.convertIdToAnswerCards(playerParty.getUserByName(username).getCurrentCards());
+            return ResponseEntity.ok(answerCards);
         }
         return ResponseEntity.noContent().build();
     }
