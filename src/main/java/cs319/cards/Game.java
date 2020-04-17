@@ -90,7 +90,8 @@ public class Game {
             waste.addCard(czarSubmissions.get(i));
         }
 
-        czarSubmissions = new ArrayList<AnswerCard>(); //resets czar choices
+        czarSubmissions.clear(); //resets czar choices
+
 
         for (int i = 0; i < party.getPartySize(); i++) { //draws each player back up to 10 cards
             if (party.getUserByIndex(i).getCurrentCards().size() < 10) {

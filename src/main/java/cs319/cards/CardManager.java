@@ -98,4 +98,66 @@ public class CardManager {
                 .collect(Collectors.toList());
         return answers.get(ThreadLocalRandom.current().nextInt(answers.size()));
     }
+
+    /**
+     * Returns a list of all question card ids in the specified pack
+     *
+     * @param packId id of the pack to return
+     * @return a list of card ids
+     */
+    public static List<Short> getQuestionCardPack(int packId) {
+        if (QUESTION_CARDS != null) {
+            return QUESTION_CARDS.stream()
+                    .filter(card -> card.getCardPack() == packId)
+                    .map(QuestionCard::getCardId)
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    /**
+     * Returns a list of all answer card ids in the specified pack
+     *
+     * @param packId id of the pack to return
+     * @return a list of card ids
+     */
+    public static List<Short> getAnswerCardPack(int packId) {
+        if (ANSWER_CARDS != null) {
+            return ANSWER_CARDS.stream()
+                    .filter(card -> card.getCardPack() == packId)
+                    .map(AnswerCard::getCardId)
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    /** Returns a list of question card ids from allowed packs
+     *
+     * @param cardPacks card packs allowed
+     * @return a List of card ids
+     */
+    public static List<Short> getQuestionCardPacks(List<Integer> cardPacks) {
+        if (QUESTION_CARDS != null) {
+            return QUESTION_CARDS.stream()
+                    .filter(card -> cardPacks.contains(card.getCardPack()))
+                    .map(QuestionCard::getCardId)
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    /** Returns a list of answer card ids from allowed packs
+     *
+     * @param cardPacks card packs allowed
+     * @return a List of card ids
+     */
+    public static List<Short> getAnswerCardPacks(List<Integer> cardPacks) {
+        if (ANSWER_CARDS != null) {
+            return ANSWER_CARDS.stream()
+                    .filter(card -> cardPacks.contains(card.getCardPack()))
+                    .map(AnswerCard::getCardId)
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
 }

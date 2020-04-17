@@ -4,13 +4,12 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+//whole class might be obsolete now with the card manager
 public class Deck<T extends Card> {
 
     private LinkedList<T> deck;
 
     private int size;
-
-    private boolean isBlack; //temp
 
     public Deck() {
         deck = new LinkedList<T>();
@@ -25,6 +24,8 @@ public class Deck<T extends Card> {
     }
 
     public int getSize() { return size; }
+
+    public boolean isEmpty() { return (size < 1); }
 
     public T draw() {
         size--;
