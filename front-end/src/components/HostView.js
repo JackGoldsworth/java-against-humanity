@@ -55,13 +55,17 @@ export class HostView extends React.Component {
                         </form>
                         <div className="buttons is-centered are-medium">
                             <button className="button is-success" onClick={createParty}>Finalize</button>
-                            <button className="button is-info">Start Game</button>
+                            <button className="button is-info" onClick = {Start}>Start Game</button>
                         </div>
                     </div>
                 </section>
             </div>
         )
     }
+}
+
+const Start = () => {
+    window.location = "/czarView"
 }
 
 /**

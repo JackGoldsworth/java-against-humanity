@@ -5,6 +5,7 @@ import {HostView} from "./components/HostView";
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {JoinParty} from "./components/JoinParty";
 import SelectCard from "./SelectCard";
+import CzarView from "./CzarView";
 
 class App extends Component {
 
@@ -17,6 +18,7 @@ class App extends Component {
                     <Route exact path="/hostview" component={HostView}/>
                     <Route exact path="/join" component={JoinParty}/>
                     <Route exact path="/selectView" component={SelectCard}/>
+                    <Route exact path="/czarView" component={CzarView}/>
                 </Switch>
             </BrowserRouter>
         )

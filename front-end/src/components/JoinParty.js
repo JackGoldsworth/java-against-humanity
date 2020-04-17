@@ -42,6 +42,7 @@ const joinParty = () => {
                 ).then((response) => {
                     if (response.status === 200) {
                         console.log("Party successfully Joined")
+                        window.location = "/selectView"
                     }
                     console.log(response.data)
                 });

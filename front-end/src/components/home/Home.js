@@ -1,5 +1,6 @@
 import React from 'react'
 import {NavBar} from "../Navbar";
+import {useHistory} from "react-router-dom"
 
 const Home = () => {
     return (
