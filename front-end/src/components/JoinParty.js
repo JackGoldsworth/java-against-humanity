@@ -1,5 +1,6 @@
 import React from 'react';
 import {NavBar} from "./Navbar";
+import * as Socket from "../Socket";
 
 const axios = require('axios').default;
 
@@ -16,6 +17,8 @@ export class JoinParty extends React.Component {
                                placeholder="Party ID"/>
                         <div className="buttons is-centered are-medium" style={{marginTop: 6 + 'vh'}}>
                             <button className="button is-success" onClick={joinParty}>Join Party</button>
+                            <button className="button is-success" onClick={() => Socket.sendMessage("Test")}>Test
+                            </button>
                         </div>
                     </div>
                 </section>
@@ -51,4 +54,5 @@ const joinParty = () => {
             console.log("Please enter a username.")
         }
     }
+    Socket.connect()
 }
