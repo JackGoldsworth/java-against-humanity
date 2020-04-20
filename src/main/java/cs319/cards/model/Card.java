@@ -2,7 +2,7 @@ package cs319.cards.model;
 
 public interface Card {
 
-    short getCardId();
+    int getCardId();
 
     String getCardMessage();
 }

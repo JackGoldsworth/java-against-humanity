@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
  */
 public class CardManager {
 
-    public static final List<QuestionCard> QUESTION_CARDS = JsonUtils.loadQuestionCardsJson();
-    public static final List<AnswerCard> ANSWER_CARDS = JsonUtils.loadAnswerCardsJson();
+    public static final List<QuestionCard> QUESTION_CARDS = JsonUtils.loadQuestionCardsJson(null);
+    public static final List<AnswerCard> ANSWER_CARDS = JsonUtils.loadAnswerCardsJson(null);
 
     private CardManager() {
         // Makes sure the class cannot be instantiated.
@@ -26,7 +26,7 @@ public class CardManager {
      * @param cardId cards unique id.
      * @return card model.
      */
-    public static QuestionCard getQuestionCardById(short cardId) {
+    public static QuestionCard getQuestionCardById(int cardId) {
         if (QUESTION_CARDS != null) {
             return QUESTION_CARDS.stream().filter(card -> card.getCardId() == cardId).findFirst().orElse(null);
         }
@@ -39,7 +39,7 @@ public class CardManager {
      * @param cardId cards unique id.
      * @return card model.
      */
-    public static AnswerCard getAnswerCardById(short cardId) {
+    public static AnswerCard getAnswerCardById(int cardId) {
         if (ANSWER_CARDS != null) {
             return ANSWER_CARDS.stream().filter(card -> card.getCardId() == cardId).findFirst().orElse(null);
         }
@@ -53,7 +53,7 @@ public class CardManager {
      * @param cardIds list of card ids.
      * @return list of card model classes.
      */
-    public static List<QuestionCard> convertIdToQuestionCards(List<Short> cardIds) {
+    public static List<QuestionCard> convertIdToQuestionCards(List<Integer> cardIds) {
         return cardIds.stream().map(CardManager::getQuestionCardById).collect(Collectors.toList());
     }
 
@@ -63,7 +63,7 @@ public class CardManager {
      * @param cardIds list of card ids.
      * @return list of card model classes.
      */
-    public static List<AnswerCard> convertIdToAnswerCards(List<Short> cardIds) {
+    public static List<AnswerCard> convertIdToAnswerCards(List<Integer> cardIds) {
         return cardIds.stream().map(CardManager::getAnswerCardById).collect(Collectors.toList());
     }
 
@@ -75,8 +75,8 @@ public class CardManager {
      * @param cardPacks           card packs allowed.
      * @return an answer card.
      */
-    public static short getAnswerCardAtRandom(List<Short> playersCurrentCards, List<Integer> cardPacks) {
-        List<Short> answers = ANSWER_CARDS.stream()
+    public static int getAnswerCardAtRandom(List<Integer> playersCurrentCards, List<Integer> cardPacks) {
+        List<Integer> answers = ANSWER_CARDS.stream()
                 .filter(card -> !playersCurrentCards.contains(card.getCardId()) && cardPacks.contains(card.getCardPack()))
                 .map(AnswerCard::getCardId)
                 .collect(Collectors.toList());
@@ -91,8 +91,8 @@ public class CardManager {
      * @param cardPacks        card packs allowed.
      * @return a question card.
      */
-    public static short getQuestionCardAtRandom(List<Short> cardsAlreadyUsed, List<Integer> cardPacks) {
-        List<Short> answers = QUESTION_CARDS.stream()
+    public static int getQuestionCardAtRandom(List<Integer> cardsAlreadyUsed, List<Integer> cardPacks) {
+        List<Integer> answers = QUESTION_CARDS.stream()
                 .filter(card -> !cardsAlreadyUsed.contains(card.getCardId()) && cardPacks.contains(card.getCardPack()))
                 .map(QuestionCard::getCardId)
                 .collect(Collectors.toList());
@@ -105,7 +105,7 @@ public class CardManager {
      * @param packId id of the pack to return
      * @return a list of card ids
      */
-    public static List<Short> getQuestionCardPack(int packId) {
+    public static List<Integer> getQuestionCardPack(int packId) {
         if (QUESTION_CARDS != null) {
             return QUESTION_CARDS.stream()
                     .filter(card -> card.getCardPack() == packId)
@@ -121,7 +121,7 @@ public class CardManager {
      * @param packId id of the pack to return
      * @return a list of card ids
      */
-    public static List<Short> getAnswerCardPack(int packId) {
+    public static List<Integer> getAnswerCardPack(int packId) {
         if (ANSWER_CARDS != null) {
             return ANSWER_CARDS.stream()
                     .filter(card -> card.getCardPack() == packId)
@@ -131,12 +131,13 @@ public class CardManager {
         return null;
     }
 
-    /** Returns a list of question card ids from allowed packs
+    /**
+     * Returns a list of question card ids from allowed packs
      *
      * @param cardPacks card packs allowed
      * @return a List of card ids
      */
-    public static List<Short> getQuestionCardPacks(List<Integer> cardPacks) {
+    public static List<Integer> getQuestionCardPacks(List<Integer> cardPacks) {
         if (QUESTION_CARDS != null) {
             return QUESTION_CARDS.stream()
                     .filter(card -> cardPacks.contains(card.getCardPack()))
@@ -146,12 +147,13 @@ public class CardManager {
         return null;
     }
 
-    /** Returns a list of answer card ids from allowed packs
+    /**
+     * Returns a list of answer card ids from allowed packs
      *
      * @param cardPacks card packs allowed
      * @return a List of card ids
      */
-    public static List<Short> getAnswerCardPacks(List<Integer> cardPacks) {
+    public static List<Integer> getAnswerCardPacks(List<Integer> cardPacks) {
         if (ANSWER_CARDS != null) {
             return ANSWER_CARDS.stream()
                     .filter(card -> cardPacks.contains(card.getCardPack()))

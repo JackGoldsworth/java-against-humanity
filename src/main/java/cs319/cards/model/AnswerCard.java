@@ -5,17 +5,17 @@ import java.util.Objects;
 
 public class AnswerCard implements Card {
 
-    private final short cardId;
+    private final int cardId;
     private final String cardMessage;
     private final int cardPack;
 
-    public AnswerCard(short cardId, String cardMessage, int cardPack) {
+    public AnswerCard(int cardId, String cardMessage, int cardPack) {
         this.cardId = cardId;
         this.cardMessage = cardMessage;
         this.cardPack = cardPack;
     }
 
-    public short getCardId() {
+    public int getCardId() {
         return cardId;
     }
 

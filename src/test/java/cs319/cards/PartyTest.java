@@ -5,12 +5,14 @@ import cs319.cards.model.User;
 import cs319.cards.model.form.JoinForm;
 import cs319.cards.service.PartyService;
 import javafx.util.Pair;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class PartyTest {
 
+    @DisplayName("Test Creating a Party")
     @Test
     public void testCreateParty() {
         PartyService partyService = Mockito.mock(PartyService.class);
@@ -22,9 +24,10 @@ public class PartyTest {
             return new Pair<>(party, true);
         });
         partyService.createParty("Test", null, 5, 3);
-        Assert.assertTrue(PartyManager.getPartyByUsername("Test").isPresent());
+        Assertions.assertTrue(PartyManager.getPartyByUsername("Test").isPresent());
     }
 
+    @DisplayName("Test Joining a Party")
     @Test
     public void testJoinParty() {
         PartyService partyService = Mockito.mock(PartyService.class);
@@ -36,6 +39,6 @@ public class PartyTest {
             return new Pair<>(party, true);
         });
         Pair<Party, Boolean> result = partyService.joinParty(form);
-        Assert.assertNotNull(result.getKey().getUserByName("Test1"));
+        Assertions.assertNotNull(result.getKey().getUserByName("Test1"));
     }
 }

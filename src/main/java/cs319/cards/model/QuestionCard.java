@@ -5,19 +5,19 @@ import java.util.Objects;
 
 public class QuestionCard implements Card {
 
-    private final short cardId;
+    private final int cardId;
     private final String cardMessage;
-    private final short blanks;
+    private final int blanks;
     private final int cardPack;
 
-    public QuestionCard(short cardId, String cardMessage, short blanks, int cardPack) {
+    public QuestionCard(int cardId, String cardMessage, int blanks, int cardPack) {
         this.cardId = cardId;
         this.cardMessage = cardMessage;
         this.blanks = blanks;
         this.cardPack = cardPack;
     }
 
-    public short getCardId() {
+    public int getCardId() {
         return cardId;
     }
 
@@ -25,7 +25,7 @@ public class QuestionCard implements Card {
         return cardMessage;
     }
 
-    public short getBlanks() {
+    public int getBlanks() {
         return blanks;
     }
 
