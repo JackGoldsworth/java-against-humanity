@@ -1,5 +1,7 @@
 package cs319.cards.model;
 
+import cs319.cards.CardManager;
+import cs319.cards.Game;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ public class Party {
     private final List<Integer> cardPacks;
     private final int maxPlayers;
     private final int scoreToWin;
+    private final Game game;
 
     public Party(String hostname, List<Integer> cardPacks, int maxPlayers, int scoreToWin) {
         this.hostname = hostname;
@@ -20,6 +23,7 @@ public class Party {
         this.id = RandomStringUtils.randomAlphanumeric(6);
         this.maxPlayers = maxPlayers;
         this.scoreToWin = scoreToWin;
+        this.game = new Game(this, CardManager.getQuestionCardPacks(cardPacks), CardManager.getAnswerCardPacks(cardPacks), maxPlayers);
     }
 
     public void addUser(User user) {
@@ -84,5 +88,9 @@ public class Party {
 
     public int getScoreToWin() {
         return scoreToWin;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import Home from './components/home/Home'
-import {About} from "./components/about/About";
-import {HostView} from "./components/HostView";
+import Home from './components/misc/Home'
+import {About} from "./components/misc/About";
+import {HostView} from "./components/auth/HostView";
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {JoinParty} from "./components/JoinParty";
-import SelectCard from "./SelectCard";
-import CzarView from "./CzarView";
+import {JoinParty} from "./components/auth/JoinParty";
+import PlayerMenu from "./components/game/PlayerMenu";
 
 class App extends Component {
 
@@ -17,8 +16,7 @@ class App extends Component {
                     <Route exact path="/about" component={About}/>
                     <Route exact path="/hostview" component={HostView}/>
                     <Route exact path="/join" component={JoinParty}/>
-                    <Route exact path="/selectView" component={SelectCard}/>
-                    <Route exact path="/czarView" component={CzarView}/>
+                    <Route exact path="/playerMenu" component={PlayerMenu}/>
                 </Switch>
             </BrowserRouter>
         )

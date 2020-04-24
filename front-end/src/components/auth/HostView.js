@@ -1,6 +1,6 @@
 import React from 'react';
-import {NavBar} from "./Navbar";
-import {getPartyId, getUsername} from "../AppUtils";
+import {NavBar} from "../Navbar";
+import {getPartyId, getUsername} from "../../AppUtils";
 
 const axios = require('axios').default;
 

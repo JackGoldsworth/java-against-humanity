@@ -1,8 +1,8 @@
 import React from 'react';
-import ScoreName from "./components/ScoreName";
-import BlackCard from "./components/BlackCard";
-import WhiteCard from "./components/WhiteCard";
-import {getUsername} from "./AppUtils";
+import ScoreName from "./ScoreName";
+import BlackCard from "./BlackCard";
+import WhiteCard from "./WhiteCard";
+import {getUsername} from "../../AppUtils";
 
 const axios = require('axios').default;
 

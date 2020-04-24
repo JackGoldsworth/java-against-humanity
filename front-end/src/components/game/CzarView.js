@@ -1,12 +1,10 @@
 import React from 'react';
-import PlayerHand from "./components/PlayerHand";
-import ScoreName from "./components/ScoreName";
-import BlackCard from "./components/BlackCard";
-import CzarChoices from "./components/CzarChoices";
-import WhiteCard from "./components/WhiteCard";
+import ScoreName from "./ScoreName";
+import BlackCard from "./BlackCard";
+import WhiteCard from "./WhiteCard";
 
 
-class CzarView extends React.Component{
+class CzarView extends React.Component {
 
     render() {
         return (

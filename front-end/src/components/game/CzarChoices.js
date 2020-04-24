@@ -1,5 +1,6 @@
 import React from 'react'
 import WhiteCard from "./WhiteCard";
+
 const axios = require('axios').default;
 
 const CzarChoices = () => {
