@@ -1,5 +1,7 @@
 package cs319.cards.controller;
 
+import cs319.cards.CardManager;
+import cs319.cards.Game;
 import cs319.cards.PartyManager;
 import cs319.cards.model.Party;
 import cs319.cards.model.PartyInfo;
@@ -9,6 +11,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class SocketController {
@@ -19,11 +22,15 @@ public class SocketController {
         Optional<Party> party = PartyManager.getPartyByUsername(username);
         if (party.isPresent()) {
             Party playerParty = party.get();
-            PartyInfo info = new PartyInfo(playerParty.getHostname(),
-                    playerParty.getUsers(),
-                    playerParty.getGame().getBlackCard(),
-                    playerParty.getGame().getCzar().getUsername());
-            return ResponseEntity.ok(info);
+            Game game = playerParty.getGame();
+            if (game != null) {
+                PartyInfo info = new PartyInfo(playerParty.getHostname(),
+                        playerParty.getUsers(),
+                        game.getBlackCard(),
+                        game.getCzar().getUsername(),
+                        game.getCzarChoices().values().stream().map(CardManager::getAnswerCardById).collect(Collectors.toList()));
+                return ResponseEntity.ok(info);
+            }
         }
         return ResponseEntity.noContent().build();
     }

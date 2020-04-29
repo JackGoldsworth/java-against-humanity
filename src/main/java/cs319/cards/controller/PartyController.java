@@ -1,24 +1,35 @@
 package cs319.cards.controller;
 
+import cs319.cards.CardManager;
+import cs319.cards.Game;
 import cs319.cards.PartyManager;
 import cs319.cards.model.Party;
+import cs319.cards.model.PartyInfo;
 import cs319.cards.model.form.JoinForm;
 import cs319.cards.model.form.PartyForm;
 import cs319.cards.service.PartyServiceImpl;
 import javafx.util.Pair;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/parties")
 public class PartyController {
 
     private final PartyServiceImpl partyService = new PartyServiceImpl();
+
+    private final SimpMessagingTemplate simpMessagingTemplate;
+
+    public PartyController(SimpMessagingTemplate simpMessagingTemplate) {
+        this.simpMessagingTemplate = simpMessagingTemplate;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<String> createParty(@RequestBody PartyForm form) {
@@ -31,6 +42,7 @@ public class PartyController {
     public ResponseEntity<String> joinParty(@RequestBody JoinForm joinForm) {
         Pair<Party, Boolean> result = partyService.joinParty(joinForm);
         if (result.getValue()) {
+            forceUpdate(joinForm.getUsername());
             return ResponseEntity.ok(joinForm.getUsername() + " successfully joined the party with id: " + joinForm.getId() + " That is hosted by: " + result.getKey().getHostname());
         }
         return ResponseEntity.badRequest().body("Party already exists under $userName");
@@ -44,5 +56,21 @@ public class PartyController {
             return ResponseEntity.ok(playerParty.getGame().getCzarName());
         }
         return ResponseEntity.noContent().build();
+    }
+
+    private void forceUpdate(String username) {
+        Optional<Party> party = PartyManager.getPartyByUsername(username);
+        if (party.isPresent()) {
+            Party playerParty = party.get();
+            Game game = playerParty.getGame();
+            if (game != null) {
+                PartyInfo info = new PartyInfo(playerParty.getHostname(),
+                        playerParty.getUsers(),
+                        game.getBlackCard(),
+                        game.getCzar().getUsername(),
+                        game.getCzarChoices().values().stream().map(CardManager::getAnswerCardById).collect(Collectors.toList()));
+                simpMessagingTemplate.convertAndSend("/results", info);
+            }
+        }
     }
 }

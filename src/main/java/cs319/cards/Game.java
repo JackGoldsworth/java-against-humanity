@@ -5,9 +5,7 @@ import cs319.cards.model.Party;
 import cs319.cards.model.QuestionCard;
 import cs319.cards.model.User;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -20,7 +18,7 @@ public class Game {
     private List<Integer> blackDeck;
     private QuestionCard curBlackQuestionCard;
     private User czar;
-    private List<Integer> czarSubmissions;
+    private Map<User, Integer> czarSubmissions;
     private List<Integer> waste;
     private List<Integer> blackWaste;
     private int scoreToWin;
@@ -31,27 +29,34 @@ public class Game {
         this.blackDeck = blackDeck;
         this.scoreToWin = scoreToWin;
         czar = p.getUserByIndex(0); //temp
-        czarSubmissions = new ArrayList<>();
+        czarSubmissions = new HashMap<>();
         waste = new ArrayList<>();
         blackWaste = new ArrayList<>();
     }
 
     //Getters
-    public User getCzar() { return czar; }
+    public User getCzar() {
+        return czar;
+    }
 
-    public String getCzarName() { return czar.getUsername(); }
+    public String getCzarName() {
+        return czar.getUsername();
+    }
 
-    public List<Integer> getCzarChoices() {
+    public Map<User, Integer> getCzarChoices() {
         return czarSubmissions;
     }
 
-    public Party getParty() { return party; }
+    public Party getParty() {
+        return party;
+    }
 
     public QuestionCard getBlackCard() {
         return curBlackQuestionCard;
     }
 
     //Game Actions
+
     /**
      * Gives each player 10 cards and does other necessary things for the start of the game
      * Must be called once before any other game actions
@@ -79,8 +84,10 @@ public class Game {
      * @param c Card to play
      */
     public void playCardSingle(AnswerCard c, User u) {
-        czarSubmissions.add(c.getCardId());
-        u.removeCards(c);
+        if (!czarSubmissions.containsKey(u)) {
+            czarSubmissions.put(u, c.getCardId());
+            u.removeCards(c);
+        }
     }
 
     /**
@@ -90,13 +97,13 @@ public class Game {
      */
     public void czarSelectSingle(AnswerCard c) {
         // add a point to the user that has this card.
-        party.getUsers().stream().filter(user -> user.hasCard(c)).findFirst().ifPresent(User::addPoint);
+        party.getUsers().stream().filter(u -> u.hasCard(c)).findFirst().ifPresent(User::addPoint);
 
-        for (int i = 0; i < czarSubmissions.size(); i++) { //sends all played cards to the waste pile
-            AnswerCard answerCard = CardManager.getAnswerCardById(czarSubmissions.get(i));
+        for (Integer card : czarSubmissions.values()) { //sends all played cards to the waste pile
+            AnswerCard answerCard = CardManager.getAnswerCardById(card);
             // Removes the card from the user that has this card.
-            party.getUsers().stream().filter(user -> user.hasCard(answerCard)).findFirst().ifPresent(user -> user.removeCards(answerCard));
-            waste.add(answerCard.getCardId());
+            party.getUsers().stream().filter(u -> u.hasCard(answerCard)).findFirst().ifPresent(u -> u.removeCards(answerCard));
+            waste.add(card);
         }
 
         czarSubmissions.clear(); //resets czar choices
@@ -109,7 +116,7 @@ public class Game {
         }
 
         blackWaste.add(curBlackQuestionCard.getCardId());
-        int chosenCard = ThreadLocalRandom.current().nextInt(deck.size());
+        int chosenCard = ThreadLocalRandom.current().nextInt(blackDeck.size());
         curBlackQuestionCard = CardManager.getQuestionCardById(blackDeck.get(chosenCard));
         blackWaste.add(chosenCard);
 
@@ -118,6 +125,7 @@ public class Game {
 
     /**
      * Checks if any player has won
+     *
      * @return Winning User, or null if no winner found
      */
     public User checkForWinner() {
@@ -128,6 +136,7 @@ public class Game {
         }
         return null;
     }
+
     //assumes party is ordered in turn order, subject to change
     public void shiftCzar() {
         if (party.getUsers().indexOf(czar) >= (party.getPartySize() - 1)) {
@@ -135,6 +144,5 @@ public class Game {
         } else {
             czar = party.getUsers().get(party.getUsers().indexOf(czar) + 1);
         }
-
     }
 }

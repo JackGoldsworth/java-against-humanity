@@ -7,8 +7,6 @@ import * as Stomp from "stompjs";
 
 let stompClient = null;
 
-const axios = require('axios').default;
-
 class PlayerMenu extends React.Component {
 
     constructor(props) {
@@ -17,25 +15,32 @@ class PlayerMenu extends React.Component {
             isCzar: false,
             host: "",
             blackCard: "",
-            users: []
+            users: [],
+            playedCards: []
         }
     }
 
     render() {
-        this.connect(this)
         if (this.state.isCzar) {
             return <CzarView
                 host={this.state.host}
                 blackCard={this.state.blackCard}
                 users={this.state.users}
+                send={this.sendMessage}
+                playedCards={this.state.playedCards}
             />
         } else {
             return <SelectCard
                 host={this.state.host}
                 blackCard={this.state.blackCard}
                 users={this.state.users}
+                send={this.sendMessage}
             />
         }
+    }
+
+    componentDidMount() {
+        this.connect(this)
     }
 
     connect(bind) {
@@ -51,9 +56,9 @@ class PlayerMenu extends React.Component {
                     isCzar: getUsername() === body.czar,
                     host: body.hostname,
                     blackCard: body.blackCard.cardMessage,
-                    users: body.users
+                    users: body.users,
+                    playedCards: body.playedCards
                 });
-                bind.forceUpdate()
             });
             bind.sendMessage(getUsername())
         });

@@ -2,6 +2,7 @@ package cs319.cards;
 
 import cs319.cards.model.AnswerCard;
 import cs319.cards.model.QuestionCard;
+import cs319.cards.utils.JsonUtils;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -159,6 +160,21 @@ public class CardManager {
                     .filter(card -> cardPacks.contains(card.getCardPack()))
                     .map(AnswerCard::getCardId)
                     .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    /**
+     * This gets an answer card from the card message.
+     *
+     * @param message message of card to grab.
+     * @return an answer card.
+     */
+    public static AnswerCard getAnswerCardByMessage(String message) {
+        if (ANSWER_CARDS != null) {
+            return ANSWER_CARDS.stream()
+                    .filter(card -> card.getCardMessage().equals(message))
+                    .findFirst().orElse(null);
         }
         return null;
     }

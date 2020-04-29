@@ -1,7 +1,6 @@
 import React from 'react';
 import ScoreName from "./ScoreName";
 import BlackCard from "./BlackCard";
-import WhiteCard from "./WhiteCard";
 import {getUsername} from "../../AppUtils";
 
 const axios = require('axios').default;
@@ -17,14 +16,19 @@ export default class SelectCard extends React.Component {
 
     render() {
         let cards = this.state.data.map(item => (
-            <div className="level-item">
-                <WhiteCard label={item.cardMessage}/>
+            <div className={'whiteCard'}>
+                <button className="button is-rounded is-white has-background-white has-text-black" onClick={() => {
+                    this.playCard(item.cardMessage, this)
+                }}> {item.cardMessage} </button>
             </div>
         ))
 
         let player = this.props.users.map(user => (
             <div className="level-item">
-                <ScoreName label={user.username} value={user.points}/>
+                <ScoreName label={user.username}
+                           value={user.points}
+
+                />
             </div>
         ))
 
@@ -79,6 +83,25 @@ export default class SelectCard extends React.Component {
             });
         } else {
             console.log("Username didn't exist.")
+        }
+    }
+
+    playCard(message, bind) {
+        let username = getUsername();
+
+        let data = {
+            username: username,
+            cardMessage: message
+        };
+
+        if (username.toString()) {
+            axios.post("http://localhost:8080/cards/play",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            ).then((response) => {
+                console.log(response.data);
+                bind.props.send(username)
+            });
         }
     }
 }

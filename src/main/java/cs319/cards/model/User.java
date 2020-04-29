@@ -21,7 +21,7 @@ public class User {
     }
 
     public void removeCards(AnswerCard answerCard) {
-        currentCards.remove(answerCard.getCardId());
+        currentCards.remove(Integer.valueOf(answerCard.getCardId()));
     }
 
     public void addCard(int cardId) {
@@ -29,7 +29,7 @@ public class User {
     }
 
     public void removeCards(short cardId) {
-        currentCards.remove(cardId);
+        currentCards.remove(Integer.valueOf(cardId));
     }
 
     public List<Integer> getCurrentCards() {

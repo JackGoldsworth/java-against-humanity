@@ -1,4 +1,4 @@
-package cs319.cards;
+package cs319.cards.utils;
 
 import com.google.gson.Gson;
 import cs319.cards.model.AnswerCard;
@@ -50,7 +50,6 @@ public class JsonUtils {
             try {
                 Reader reader = Files.newBufferedReader(Paths.get(file.toURI()));
                 List<QuestionCard> questionCards = gson.fromJson(reader, QuestionCard.QuestionDeck.class).getQuestionCards();
-                questionCards.forEach(card -> System.out.println(card.getCardMessage()));
                 return questionCards;
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
@@ -84,7 +83,6 @@ public class JsonUtils {
             try {
                 Reader reader = Files.newBufferedReader(Paths.get(file.toURI()));
                 List<AnswerCard> questionCards = gson.fromJson(reader, AnswerCard.AnswerDeck.class).getAnswerCards();
-                questionCards.forEach(card -> System.out.println(card.getCardMessage()));
                 return questionCards;
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
