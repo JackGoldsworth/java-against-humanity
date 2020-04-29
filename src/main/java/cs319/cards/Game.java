@@ -68,7 +68,7 @@ public class Game {
             }
         }
 
-        int chosenCard = ThreadLocalRandom.current().nextInt(deck.size());
+        int chosenCard = ThreadLocalRandom.current().nextInt(blackDeck.size());
         curBlackQuestionCard = CardManager.getQuestionCardById(blackDeck.get(chosenCard));
         blackWaste.add(chosenCard);
     }

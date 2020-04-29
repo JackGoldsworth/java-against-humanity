@@ -72,7 +72,7 @@ export class HostView extends React.Component {
 }
 
 const Start = () => {
-    window.location = "/czarView"
+    window.location = "/playerMenu"
 }
 
 /**

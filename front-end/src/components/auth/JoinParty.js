@@ -2,7 +2,6 @@ import React from 'react';
 import {NavBar} from "../Navbar";
 
 const axios = require('axios').default;
-let stompClient = null;
 
 export class JoinParty extends React.Component {
     render() {
@@ -16,8 +15,6 @@ export class JoinParty extends React.Component {
                                placeholder="Party ID"/>
                         <div className="buttons is-centered are-medium" style={{marginTop: 6 + 'vh'}}>
                             <button className="button is-success" onClick={() => this.joinParty(this)}>Join Party
-                            </button>
-                            <button className="button is-success" onClick={() => this.sendMessage("Test")}>Test
                             </button>
                         </div>
                     </div>

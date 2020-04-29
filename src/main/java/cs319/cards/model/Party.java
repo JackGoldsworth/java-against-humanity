@@ -23,6 +23,7 @@ public class Party {
         this.id = RandomStringUtils.randomAlphanumeric(6);
         this.maxPlayers = maxPlayers;
         this.scoreToWin = scoreToWin;
+        this.addUser(new User(hostname));
         this.game = new Game(this, CardManager.getQuestionCardPacks(cardPacks), CardManager.getAnswerCardPacks(cardPacks), maxPlayers);
     }
 

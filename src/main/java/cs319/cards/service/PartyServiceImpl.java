@@ -16,7 +16,6 @@ public class PartyServiceImpl implements PartyService {
         Optional<Party> optionalParty = PartyManager.getPartyByUsername(username);
         if (!optionalParty.isPresent()) {
             Party party = new Party(username, cardPacks, maxPlayers, scoreToWin);
-            party.addUser(new User(username));
             PartyManager.parties.add(party);
             return new Pair<>(party, true);
         }

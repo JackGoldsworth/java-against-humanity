@@ -44,7 +44,7 @@ class CzarView extends React.Component {
 
                 <div className="level">
                     <div className="level-item">
-                        <BlackCard label="BLACK CARD TO BE FILLED WITH SILLY PROMPT"/>
+                        <BlackCard label={this.props.blackCard}/>
                     </div>
                 </div>
 

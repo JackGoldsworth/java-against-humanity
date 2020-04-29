@@ -13,36 +13,25 @@ class PlayerMenu extends React.Component {
 
     constructor(props) {
         super(props);
-        this.setState({
-            isCzar: false
-        })
+        this.state = {
+            isCzar: false,
+            host: "",
+            blackCard: ""
+        }
     }
 
     render() {
         this.connect(this)
         if (this.state.isCzar) {
-            return <CzarView/>
+            return <CzarView
+                host={this.state.host}
+                blackCard={this.state.blackCard}
+            />
         } else {
-            return <SelectCard/>
-        }
-    }
-
-    getCurrentCzar() {
-        let username = getUsername()
-        if (username) {
-            axios.post("http://localhost:8080/parties/czar",
-                username.toString(),
-                {headers: {"Content-Type": "text/plain"}}
-            ).then((response) => {
-                console.log(response.data)
-                if (response.status === 200) {
-                    console.log("Successfully retrieved czar")
-                    this.setState({isCzar: username === response.data});
-                    this.forceUpdate()
-                }
-            });
-        } else {
-            console.log("Username didn't exist.")
+            return <SelectCard
+                host={this.state.host}
+                blackCard={this.state.blackCard}
+            />
         }
     }
 
@@ -52,9 +41,17 @@ class PlayerMenu extends React.Component {
         stompClient.connect({}, function (frame) {
             console.log('Connected');
             stompClient.subscribe('/results', function (messageOutput) {
-                console.log(messageOutput.body);
-                bind.getCurrentCzar()
+                let body = JSON.parse(messageOutput.body)
+                body = body.body
+                console.log(body)
+                bind.setState({
+                    isCzar: getUsername() === body.czar,
+                    host: body.hostname,
+                    blackCard: body.blackCard.cardMessage
+                });
+                bind.forceUpdate()
             });
+            bind.sendMessage(getUsername())
         });
     }
 
