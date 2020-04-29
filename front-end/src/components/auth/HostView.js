@@ -92,6 +92,11 @@ const createParty = () => {
     if (document.getElementById("nsfwpack").checked) cardPacks.push(1)
     if (document.getElementById("cspack").checked) cardPacks.push(2)
 
+    // Make sure that if there are no packs, at least have the base pack.
+    if (cardPacks.length === 0) {
+        cardPacks.push(0)
+    }
+
     let data = {
         username: username,
         cardPacks: cardPacks,

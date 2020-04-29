@@ -22,6 +22,12 @@ export default class SelectCard extends React.Component {
             </div>
         ))
 
+        let player = this.props.users.map(user => (
+            <div className="level-item">
+                <ScoreName label={user.username} value={user.points}/>
+            </div>
+        ))
+
         return (
             <section className="hero is-fullheight is-mobile has-background-dark has-text-white">
                 <div class="level">
@@ -36,22 +42,8 @@ export default class SelectCard extends React.Component {
                     </div>
                 </div>
 
-                <div class="level">
-                    <div className="level-item">
-                        <ScoreName label={"Big Jed"} value={0}/>
-                    </div>
-
-                    <div className="level-item">
-                        <ScoreName label={"Owen Boi"} value={0}/>
-                    </div>
-
-                    <div className="level-item">
-                        <ScoreName label={"Jack Nerd"} value={0}/>
-                    </div>
-
-                    <div className="level-item">
-                        <ScoreName label={"Jeff Epstein"} value={0}/>
-                    </div>
+                <div className="level">
+                    {player}
                 </div>
 
                 <div className="level">

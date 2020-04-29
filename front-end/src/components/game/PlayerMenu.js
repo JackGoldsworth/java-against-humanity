@@ -16,7 +16,8 @@ class PlayerMenu extends React.Component {
         this.state = {
             isCzar: false,
             host: "",
-            blackCard: ""
+            blackCard: "",
+            users: []
         }
     }
 
@@ -26,11 +27,13 @@ class PlayerMenu extends React.Component {
             return <CzarView
                 host={this.state.host}
                 blackCard={this.state.blackCard}
+                users={this.state.users}
             />
         } else {
             return <SelectCard
                 host={this.state.host}
                 blackCard={this.state.blackCard}
+                users={this.state.users}
             />
         }
     }
@@ -47,7 +50,8 @@ class PlayerMenu extends React.Component {
                 bind.setState({
                     isCzar: getUsername() === body.czar,
                     host: body.hostname,
-                    blackCard: body.blackCard.cardMessage
+                    blackCard: body.blackCard.cardMessage,
+                    users: body.users
                 });
                 bind.forceUpdate()
             });
