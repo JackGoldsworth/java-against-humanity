@@ -5,6 +5,7 @@ import cs319.cards.Game;
 import cs319.cards.PartyManager;
 import cs319.cards.model.Party;
 import cs319.cards.model.PartyInfo;
+import cs319.cards.model.User;
 import cs319.cards.model.form.JoinForm;
 import cs319.cards.model.form.PartyForm;
 import cs319.cards.service.PartyServiceImpl;
@@ -40,9 +41,10 @@ public class PartyController {
 
     @PostMapping("/join")
     public ResponseEntity<String> joinParty(@RequestBody JoinForm joinForm) {
-        Pair<Party, Boolean> result = partyService.joinParty(joinForm);
-        if (result.getValue()) {
+        Pair<Party, User> result = partyService.joinParty(joinForm);
+        if (result.getValue() != null) {
             forceUpdate(joinForm.getUsername());
+            result.getKey().getGame().giveCards(result.getValue());
             return ResponseEntity.ok(joinForm.getUsername() + " successfully joined the party with id: " + joinForm.getId() + " That is hosted by: " + result.getKey().getHostname());
         }
         return ResponseEntity.badRequest().body("Party already exists under $userName");

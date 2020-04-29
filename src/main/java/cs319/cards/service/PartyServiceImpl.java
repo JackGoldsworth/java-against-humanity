@@ -23,12 +23,13 @@ public class PartyServiceImpl implements PartyService {
     }
 
     @Override
-    public Pair<Party, Boolean> joinParty(JoinForm joinForm) {
+    public Pair<Party, User> joinParty(JoinForm joinForm) {
         Optional<Party> optionalParty = PartyManager.getPartyById(joinForm.getId());
         if (optionalParty.isPresent()) {
-            optionalParty.get().addUser(new User(joinForm.getUsername()));
-            return new Pair<>(optionalParty.get(), true);
+            User user = new User(joinForm.getUsername());
+            optionalParty.get().addUser(user);
+            return new Pair<>(optionalParty.get(), user);
         }
-        return new Pair<>(null, false);
+        return new Pair<>(null, null);
     }
 }

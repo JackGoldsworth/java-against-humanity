@@ -78,6 +78,14 @@ public class Game {
         blackWaste.add(chosenCard);
     }
 
+    public void giveCards(User user) {
+        for (int j = 0; j < 10; j++) {
+            int chosenCard = ThreadLocalRandom.current().nextInt(deck.size());
+            user.addCard(deck.get(chosenCard));
+            waste.add(chosenCard);
+        }
+    }
+
     /**
      * Plays a card for the czar to consider (single blank)
      *
@@ -96,8 +104,13 @@ public class Game {
      * @param c The czar's favorite card played
      */
     public void czarSelectSingle(AnswerCard c) {
+
         // add a point to the user that has this card.
-        party.getUsers().stream().filter(u -> u.hasCard(c)).findFirst().ifPresent(User::addPoint);
+        czarSubmissions.forEach((key, value) -> {
+            if (value == c.getCardId()) {
+                key.addPoint();
+            }
+        });
 
         for (Integer card : czarSubmissions.values()) { //sends all played cards to the waste pile
             AnswerCard answerCard = CardManager.getAnswerCardById(card);
@@ -121,6 +134,7 @@ public class Game {
         blackWaste.add(chosenCard);
 
         shiftCzar();
+
     }
 
     /**

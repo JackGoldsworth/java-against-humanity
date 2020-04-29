@@ -13,7 +13,7 @@ class PlayerMenu extends React.Component {
         super(props);
         this.state = {
             isCzar: false,
-            host: "",
+            czar: "",
             blackCard: "",
             users: [],
             playedCards: []
@@ -54,7 +54,7 @@ class PlayerMenu extends React.Component {
                 console.log(body)
                 bind.setState({
                     isCzar: getUsername() === body.czar,
-                    host: body.hostname,
+                    czar: body.czar,
                     blackCard: body.blackCard.cardMessage,
                     users: body.users,
                     playedCards: body.playedCards

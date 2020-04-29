@@ -38,7 +38,7 @@ public class PartyTest {
             PartyManager.parties.add(party);
             return new Pair<>(party, true);
         });
-        Pair<Party, Boolean> result = partyService.joinParty(form);
+        Pair<Party, User> result = partyService.joinParty(form);
         Assertions.assertNotNull(result.getKey().getUserByName("Test1"));
     }
 }

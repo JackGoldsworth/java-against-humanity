@@ -1,6 +1,7 @@
 package cs319.cards.service;
 
 import cs319.cards.model.Party;
+import cs319.cards.model.User;
 import cs319.cards.model.form.JoinForm;
 import javafx.util.Pair;
 
@@ -31,5 +32,5 @@ public interface PartyService {
      * @param joinForm class containing the username and the party id.
      * @return whether the join was successful or not.
      */
-    Pair<Party, Boolean> joinParty(JoinForm joinForm);
+    Pair<Party, User> joinParty(JoinForm joinForm);
 }

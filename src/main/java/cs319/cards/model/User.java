@@ -12,8 +12,6 @@ public class User {
     public User(String username) {
         this.username = username;
         points = 0;
-        addCard(0);
-        addCard(1);
     }
 
     public void addCard(AnswerCard answerCard) {
