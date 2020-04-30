@@ -7,6 +7,8 @@ import * as Stomp from "stompjs";
 
 let stompClient = null;
 
+const axios = require('axios').default;
+
 class PlayerMenu extends React.Component {
 
     constructor(props) {
@@ -58,6 +60,10 @@ class PlayerMenu extends React.Component {
                 let winner = null;
                 if (body.winner != null) {
                     winner = body.winner.username
+                    axios.post("http://localhost:8080/parties/disband",
+                        getUsername(),
+                        {headers: {"Content-Type": "application/json"}}
+                    )
                 }
 
                 bind.setState({

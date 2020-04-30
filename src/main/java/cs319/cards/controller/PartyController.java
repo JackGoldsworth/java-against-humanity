@@ -50,6 +50,12 @@ public class PartyController {
         return ResponseEntity.badRequest().body("Party already exists under $userName");
     }
 
+    @PostMapping("/disband")
+    public ResponseEntity<String> disbandParty(@RequestBody String username) {
+        PartyManager.removeParty(username);
+        return ResponseEntity.ok("Party was successfully disbanded.");
+    }
+
     private void forceUpdate(String username) {
         Optional<Party> party = PartyManager.getPartyByUsername(username);
         if (party.isPresent()) {
