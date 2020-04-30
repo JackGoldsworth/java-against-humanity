@@ -24,7 +24,7 @@ public class Party {
         this.maxPlayers = maxPlayers;
         this.scoreToWin = scoreToWin;
         this.addUser(new User(hostname));
-        this.game = new Game(this, CardManager.getQuestionCardPacks(cardPacks), CardManager.getAnswerCardPacks(cardPacks), maxPlayers);
+        this.game = new Game(this, cardPacks, scoreToWin);
     }
 
     public void addUser(User user) {

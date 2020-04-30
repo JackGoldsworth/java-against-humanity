@@ -14,8 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Game {
 
     private Party party;
-    private List<Integer> deck;
-    private List<Integer> blackDeck;
+    private List<Integer> packs;
     private QuestionCard curBlackQuestionCard;
     private User czar;
     private Map<User, Integer> czarSubmissions;
@@ -23,10 +22,9 @@ public class Game {
     private List<Integer> blackWaste;
     private int scoreToWin;
 
-    public Game(Party p, List<Integer> blackDeck, List<Integer> whiteDeck, int scoreToWin) {
+    public Game(Party p, List<Integer> cardPacks, int scoreToWin) {
         party = p;
-        deck = whiteDeck;
-        this.blackDeck = blackDeck;
+        packs = cardPacks;
         this.scoreToWin = scoreToWin;
         czar = p.getUserByIndex(0); //temp
         czarSubmissions = new HashMap<>();
@@ -62,26 +60,23 @@ public class Game {
      * Must be called once before any other game actions
      */
     public void startGame() {
-        Collections.shuffle(deck);
-        Collections.shuffle(blackDeck);
-
         for (int i = 0; i < party.getPartySize(); i++) {
             for (int j = 0; j < 10; j++) {
-                int chosenCard = ThreadLocalRandom.current().nextInt(deck.size());
-                party.getUserByIndex(i).addCard(deck.get(chosenCard));
+                int chosenCard = CardManager.getAnswerCardAtRandom(waste, packs);
+                party.getUserByIndex(i).addCard(chosenCard);
                 waste.add(chosenCard);
             }
         }
 
-        int chosenCard = ThreadLocalRandom.current().nextInt(blackDeck.size());
-        curBlackQuestionCard = CardManager.getQuestionCardById(blackDeck.get(chosenCard));
+        int chosenCard = CardManager.getQuestionCardAtRandom(blackWaste, packs);
+        curBlackQuestionCard = CardManager.getQuestionCardById(chosenCard);
         blackWaste.add(chosenCard);
     }
 
     public void giveCards(User user) {
         for (int j = 0; j < 10; j++) {
-            int chosenCard = ThreadLocalRandom.current().nextInt(deck.size());
-            user.addCard(deck.get(chosenCard));
+            int chosenCard = CardManager.getAnswerCardAtRandom(waste, packs);
+            user.addCard(chosenCard);
             waste.add(chosenCard);
         }
     }
@@ -116,7 +111,7 @@ public class Game {
             AnswerCard answerCard = CardManager.getAnswerCardById(card);
             // Removes the card from the user that has this card.
             party.getUsers().stream().filter(u -> u.hasCard(answerCard)).findFirst().ifPresent(u -> u.removeCards(answerCard));
-            waste.add(card);
+            //waste.add(card);
         }
 
         czarSubmissions.clear(); //resets czar choices
@@ -124,13 +119,14 @@ public class Game {
 
         for (int i = 0; i < party.getPartySize(); i++) { //draws each player back up to 10 cards
             if (party.getUserByIndex(i).getCurrentCards().size() < 10) {
-                party.getUserByIndex(i).addCard(deck.get(ThreadLocalRandom.current().nextInt(deck.size())));
+                int chosenCard = CardManager.getAnswerCardAtRandom(waste, packs);
+                party.getUserByIndex(i).addCard(chosenCard);
+                waste.add(chosenCard);
             }
         }
 
-        blackWaste.add(curBlackQuestionCard.getCardId());
-        int chosenCard = ThreadLocalRandom.current().nextInt(blackDeck.size());
-        curBlackQuestionCard = CardManager.getQuestionCardById(blackDeck.get(chosenCard));
+        int chosenCard = CardManager.getQuestionCardAtRandom(blackWaste, packs);
+        curBlackQuestionCard = CardManager.getQuestionCardById(chosenCard);
         blackWaste.add(chosenCard);
 
         shiftCzar();
