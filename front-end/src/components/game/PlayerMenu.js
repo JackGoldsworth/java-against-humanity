@@ -16,7 +16,8 @@ class PlayerMenu extends React.Component {
             czar: "",
             blackCard: "",
             users: [],
-            playedCards: []
+            playedCards: [],
+            winner: null
         }
     }
 
@@ -28,6 +29,7 @@ class PlayerMenu extends React.Component {
                 users={this.state.users}
                 send={this.sendMessage}
                 playedCards={this.state.playedCards}
+                winner={this.state.winner}
             />
         } else {
             return <SelectCard
@@ -35,6 +37,7 @@ class PlayerMenu extends React.Component {
                 blackCard={this.state.blackCard}
                 users={this.state.users}
                 send={this.sendMessage}
+                winner={this.state.winner}
             />
         }
     }
@@ -52,12 +55,18 @@ class PlayerMenu extends React.Component {
                 let body = JSON.parse(messageOutput.body)
                 body = body.body
                 console.log(body)
+                let winner = null;
+                if (body.winner != null) {
+                    winner = body.winner.username
+                }
+
                 bind.setState({
                     isCzar: getUsername() === body.czar,
                     czar: body.czar,
                     blackCard: body.blackCard.cardMessage,
                     users: body.users,
-                    playedCards: body.playedCards
+                    playedCards: body.playedCards,
+                    winner: winner
                 });
             });
             bind.sendMessage(getUsername())

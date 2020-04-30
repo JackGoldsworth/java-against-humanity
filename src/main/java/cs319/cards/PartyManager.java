@@ -25,4 +25,8 @@ public class PartyManager {
     public static Optional<Party> getPartyByUsername(String userName) {
         return parties.stream().filter(party -> party.containsUser(userName)).findFirst();
     }
+
+    public static void removeParty(String username) {
+        parties.stream().filter(p -> p.containsUser(username)).findFirst().ifPresent(parties::remove);
+    }
 }

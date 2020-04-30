@@ -9,13 +9,15 @@ public class PartyInfo {
     private final QuestionCard blackCard;
     private final String czar;
     private final List<AnswerCard> playedCards;
+    private final User winner;
 
-    public PartyInfo(String hostname, List<User> users, QuestionCard blackCard, String czar, List<AnswerCard> playedCards) {
+    public PartyInfo(String hostname, List<User> users, QuestionCard blackCard, String czar, List<AnswerCard> playedCards, User winner) {
         this.hostname = hostname;
         this.users = users;
         this.blackCard = blackCard;
         this.czar = czar;
         this.playedCards = playedCards;
+        this.winner = winner;
     }
 
     public String getHostname() {
@@ -36,5 +38,9 @@ public class PartyInfo {
 
     public List<AnswerCard> getPlayedCards() {
         return playedCards;
+    }
+
+    public User getWinner() {
+        return winner;
     }
 }

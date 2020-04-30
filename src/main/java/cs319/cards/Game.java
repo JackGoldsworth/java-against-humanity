@@ -5,8 +5,10 @@ import cs319.cards.model.Party;
 import cs319.cards.model.QuestionCard;
 import cs319.cards.model.User;
 
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Handles game state logic and rules
@@ -21,6 +23,7 @@ public class Game {
     private List<Integer> waste;
     private List<Integer> blackWaste;
     private int scoreToWin;
+    private User winner;
 
     public Game(Party p, List<Integer> cardPacks, int scoreToWin) {
         party = p;
@@ -104,6 +107,10 @@ public class Game {
         czarSubmissions.forEach((key, value) -> {
             if (value == c.getCardId()) {
                 key.addPoint();
+                // If a player has won, set the winner.
+                if (key.getPoints() >= scoreToWin) {
+                    winner = key;
+                }
             }
         });
 
@@ -133,20 +140,6 @@ public class Game {
 
     }
 
-    /**
-     * Checks if any player has won
-     *
-     * @return Winning User, or null if no winner found
-     */
-    public User checkForWinner() {
-        for (int i = 0; i < party.getPartySize(); i++) {
-            if (party.getUserByIndex(i).getPoints() >= scoreToWin) {
-                return party.getUserByIndex(i);
-            }
-        }
-        return null;
-    }
-
     //assumes party is ordered in turn order, subject to change
     public void shiftCzar() {
         if (party.getUsers().indexOf(czar) >= (party.getPartySize() - 1)) {
@@ -154,5 +147,9 @@ public class Game {
         } else {
             czar = party.getUsers().get(party.getUsers().indexOf(czar) + 1);
         }
+    }
+
+    public User getWinner() {
+        return winner;
     }
 }

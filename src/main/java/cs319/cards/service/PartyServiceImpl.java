@@ -26,9 +26,12 @@ public class PartyServiceImpl implements PartyService {
     public Pair<Party, User> joinParty(JoinForm joinForm) {
         Optional<Party> optionalParty = PartyManager.getPartyById(joinForm.getId());
         if (optionalParty.isPresent()) {
-            User user = new User(joinForm.getUsername());
-            optionalParty.get().addUser(user);
-            return new Pair<>(optionalParty.get(), user);
+            Party party = optionalParty.get();
+            if (party.getMaxPlayers() > party.getPartySize()) {
+                User user = new User(joinForm.getUsername());
+                optionalParty.get().addUser(user);
+                return new Pair<>(optionalParty.get(), user);
+            }
         }
         return new Pair<>(null, null);
     }

@@ -85,7 +85,8 @@ public class CardController {
                         playerParty.getUsers(),
                         game.getBlackCard(),
                         game.getCzar().getUsername(),
-                        game.getCzarChoices().values().stream().map(CardManager::getAnswerCardById).collect(Collectors.toList()));
+                        game.getCzarChoices().values().stream().map(CardManager::getAnswerCardById).collect(Collectors.toList()),
+                        game.getWinner());
                 simpMessagingTemplate.convertAndSend("/results", info);
             }
         }

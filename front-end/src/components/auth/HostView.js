@@ -55,14 +55,7 @@ export class HostView extends React.Component {
                         </form>
                         <div className="buttons is-centered are-medium">
                             <button className="button is-success" onClick={createParty}>Finalize</button>
-                            <button className="button is-info" onClick = {Start}>Start Game</button>
-                        </div>
-                        <p className="has-text-light is-size-2" id="lobby"></p>
-                        <div>
-                           <label className="has-text-light" id="player1"></label><br/>
-                           <label className="has-text-light" id="player2"></label><br/>
-                           <label className="has-text-light" id="player3"></label><br/>
-                           <label className="has-text-light" id="player4"></label><br/>
+                            <button className="button is-info" onClick={Start}>Start Game</button>
                         </div>
                     </div>
                 </section>
@@ -114,12 +107,6 @@ const createParty = () => {
                 document.cookie = "joinCode=" + response.data;
                 // window.location = "/hostview"
                 document.getElementById("joinCode").innerText = "Join Code: " + getPartyId();
-
-                document.getElementById("lobby").innerText = "Players in Lobby:";
-                document.getElementById("player1").innerText = "Big Jed";
-                document.getElementById("player2").innerText = "Owen Boi";
-                document.getElementById("player3").innerText = "Jack Nerd";
-                document.getElementById("player4").innerText = "Jeff Epstein";
             }
         });
     }

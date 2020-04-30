@@ -28,7 +28,8 @@ public class SocketController {
                         playerParty.getUsers(),
                         game.getBlackCard(),
                         game.getCzar().getUsername(),
-                        game.getCzarChoices().values().stream().map(CardManager::getAnswerCardById).collect(Collectors.toList()));
+                        game.getCzarChoices().values().stream().map(CardManager::getAnswerCardById).collect(Collectors.toList()),
+                        game.getWinner());
                 return ResponseEntity.ok(info);
             }
         }

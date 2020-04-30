@@ -50,16 +50,6 @@ public class PartyController {
         return ResponseEntity.badRequest().body("Party already exists under $userName");
     }
 
-    @PostMapping("/czar")
-    public ResponseEntity<String> getCzar(@RequestBody String username) {
-        Optional<Party> party = PartyManager.getPartyByUsername(username);
-        if (party.isPresent()) {
-            Party playerParty = party.get();
-            return ResponseEntity.ok(playerParty.getGame().getCzarName());
-        }
-        return ResponseEntity.noContent().build();
-    }
-
     private void forceUpdate(String username) {
         Optional<Party> party = PartyManager.getPartyByUsername(username);
         if (party.isPresent()) {
@@ -70,7 +60,8 @@ public class PartyController {
                         playerParty.getUsers(),
                         game.getBlackCard(),
                         game.getCzar().getUsername(),
-                        game.getCzarChoices().values().stream().map(CardManager::getAnswerCardById).collect(Collectors.toList()));
+                        game.getCzarChoices().values().stream().map(CardManager::getAnswerCardById).collect(Collectors.toList()),
+                        game.getWinner());
                 simpMessagingTemplate.convertAndSend("/results", info);
             }
         }
