@@ -9,21 +9,6 @@ const axios = require('axios').default;
 class CzarView extends React.Component {
 
     render() {
-        let player = this.props.users.map(user => (
-            <div className="level-item">
-                <ScoreName label={user.username} value={user.points}/>
-            </div>
-        ))
-
-        let cards = this.props.playedCards.map(item => (
-            <div className={'whiteCard'}>
-                <button
-                    className="button is-rounded is-white has-background-white has-text-black" onClick={() => {
-                    this.voteOnCard(item.cardMessage, this)
-                }}> {item.cardMessage} </button>
-            </div>
-        ))
-
         if (this.props.winner != null) {
             return (
                 <div>
@@ -36,21 +21,33 @@ class CzarView extends React.Component {
                 </div>
             )
         } else {
+
+            let player = this.props.users.map(user => (
+                <div className="level-item">
+                    <ScoreName label={user.username} value={user.points}/>
+                </div>
+            ))
+
+            let cards = this.props.playedCards.map(item => (
+                <div className={'whiteCard'}>
+                    <textarea className="textarea has-background-white has-text-black" rows="8" readOnly
+                              onClick={() => {
+                                  this.voteOnCard(item.cardMessage, this)
+                              }}>
+                        {item.cardMessage}
+                    </textarea>
+                </div>
+            ))
+
             return (
                 <section className="hero is-fullheight is-mobile has-background-dark has-text-white">
                     <div class="level">
-
-                    </div>
-                    <div class="level">
-                        <div className="level-right">
-                            <button className="button "> Back</button>
-                        </div>
                         <div className="level-item">
                             <h1>Cards Against Humanity Clone</h1>
                         </div>
                     </div>
 
-                    <div className="level-left">
+                    <div className="level-left has-text-centered">
                         YOU ARE THE CZAR!
                     </div>
 

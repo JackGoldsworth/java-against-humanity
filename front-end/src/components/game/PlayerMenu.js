@@ -13,6 +13,7 @@ class PlayerMenu extends React.Component {
 
     constructor(props) {
         super(props);
+        this.connect(this)
         this.state = {
             isCzar: false,
             czar: "",
@@ -42,10 +43,6 @@ class PlayerMenu extends React.Component {
                 winner={this.state.winner}
             />
         }
-    }
-
-    componentDidMount() {
-        this.connect(this)
     }
 
     connect(bind) {
