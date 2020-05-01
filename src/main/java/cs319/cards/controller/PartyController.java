@@ -29,8 +29,11 @@ public class PartyController {
     @PostMapping("/create")
     public ResponseEntity<String> createParty(@RequestBody PartyForm form) {
         Pair<Party, Boolean> result = partyService.createParty(form.getUsername(), form.getCardPacks(), form.getMaxPlayers(), form.getScoreToWin());
-        result.getKey().getGame().startGame();
-        return result.getValue() ? ResponseEntity.ok(result.getKey().getPartyId()) : ResponseEntity.badRequest().body("Party already exists under " + form.getUsername());
+        if (result.getKey() != null) {
+            result.getKey().getGame().startGame();
+            return result.getValue() ? ResponseEntity.ok(result.getKey().getPartyId()) : ResponseEntity.badRequest().body("Party already exists under " + form.getUsername());
+        }
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/join")

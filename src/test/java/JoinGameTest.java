@@ -1,41 +1,36 @@
-import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsNot.not;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.Keys;
-import java.util.*;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class JoinGameTest {
+
     private WebDriver driver;
+    private WebDriver driverF;
     private Map<String, Object> vars;
     JavascriptExecutor js;
-    @Before
+
+    @BeforeAll
     public void setUp() {
         driver = new ChromeDriver();
         driverF = new FirefoxDriver();
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
     }
-    @After
+
+    @AfterAll
     public void tearDown() {
         driver.quit();
     }
+
     //starts game on chrome, joins on firefox
     //may or may not actually work, couldn't test it myself
     @Test
@@ -49,7 +44,7 @@ public class JoinGameTest {
         driver.findElement(By.id("cspack")).click();
         driver.findElement(By.cssSelector(".is-success")).click();
 
-        String gameCode = driver.findElement(By.id("joinCode")).getAttribute("value") - "Join Code: ";
+        String gameCode = driver.findElement(By.id("joinCode")).getAttribute("value").replace("Join Code: ", "");
 
         driver.findElement(By.cssSelector(".is-info")).click();
         driver.findElement(By.cssSelector(".playerName > input")).click();
@@ -64,10 +59,10 @@ public class JoinGameTest {
         driverF.findElement(By.cssSelector(".button")).click();
         {
             String val = driverF.findElement(By.cssSelector(".level-item:nth-child(1) .playerName > input")).getAttribute("value");
-            assertThat(value, is("Name: User1"));
+            Assertions.assertEquals(val, "Name: User1");
         }
 
-        driver.close();
         driverF.close();
+        driver.close();
     }
 }
