@@ -12,10 +12,10 @@ plugins {
 
 apply plugin: "com.moowork.node"
 
-group 'cs319.cards'
+group 'me.jackgoldsworth.cards'
 version '0.1'
 
-mainClassName = 'cs319.cards.Application'
+mainClassName = 'me.jackgoldsworth.cards.Application'
 
 repositories {
     mavenCentral()
@@ -50,7 +50,7 @@ idea {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'cs319.cards.Application'
+        attributes 'Main-Class': 'me.jackgoldsworth.Application'
     }
 }
 
