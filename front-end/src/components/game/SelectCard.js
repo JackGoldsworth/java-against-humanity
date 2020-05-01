@@ -16,23 +16,6 @@ export default class SelectCard extends React.Component {
     }
 
     render() {
-        let cards = this.state.data.map(item => (
-            <div className={'whiteCard'}>
-                <button className="button is-rounded is-white has-background-white has-text-black" onClick={() => {
-                    this.playCard(item.cardMessage, this)
-                }}> {item.cardMessage} </button>
-            </div>
-        ))
-
-        let player = this.props.users.map(user => (
-            <div className="level-item">
-                <ScoreName label={user.username}
-                           value={user.points}
-
-                />
-            </div>
-        ))
-
         if (this.props.winner != null) {
             return (
                 <div>
@@ -45,15 +28,30 @@ export default class SelectCard extends React.Component {
                 </div>
             )
         } else {
+
+            let cards = this.state.data.map(item => (
+                <div className={'whiteCard'}>
+                    <textarea className="textarea has-background-white has-text-black" rows="8" readOnly
+                              onClick={() => {
+                                  this.playCard(item.cardMessage, this)
+                              }}>
+                        {item.cardMessage}
+                    </textarea>
+                </div>
+            ))
+
+            let player = this.props.users.map(user => (
+                <div className="level-item">
+                    <ScoreName label={user.username}
+                               value={user.points}
+
+                    />
+                </div>
+            ))
+
             return (
                 <section className="hero is-fullheight is-mobile has-background-dark has-text-white">
                     <div class="level">
-
-                    </div>
-                    <div class="level">
-                        <div className="level-right">
-                            <button className="button "> Back</button>
-                        </div>
                         <div className="level-item">
                             <h1>Cards Against Humanity Clone</h1>
                         </div>
@@ -92,7 +90,6 @@ export default class SelectCard extends React.Component {
                 if (response.status === 200) {
                     console.log("Successfully retrieved cards")
                     this.setState({data: response.data});
-                    this.forceUpdate()
                 }
             });
         } else {
