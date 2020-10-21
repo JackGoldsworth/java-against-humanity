@@ -11,7 +11,7 @@ public class PartyManager {
     public static final List<Party> parties = new ArrayList<>();
 
     private PartyManager() {
-        // Makes sure the class cannot be instantiated.
+        throw new IllegalArgumentException("PartyManager should not be instantiated");
     }
 
     public static Optional<Party> getPartyByHostname(String userName) {
