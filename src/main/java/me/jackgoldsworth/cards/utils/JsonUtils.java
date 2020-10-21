@@ -23,6 +23,7 @@ import java.util.List;
 public class JsonUtils {
 
     private JsonUtils() {
+        throw new IllegalArgumentException("PartyManager should not be instantiated");
     }
 
     /**
